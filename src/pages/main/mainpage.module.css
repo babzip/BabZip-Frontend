@@ -1,0 +1,22 @@
+.container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bottomWrapper {
+  width: 100%;
+  margin: 3rem 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-content: center;
+}
+
+.bottomWrapper :only-child {
+  position: relative;
+  right: 1.4rem;
+}
