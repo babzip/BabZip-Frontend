@@ -17,15 +17,19 @@ const VisitedEatery = ({
   visited,
   textContent,
 }: Props) => {
-  const [reviewText, setReviewText] = useState<string>(textContent);
+  const [isFullView, setIsFullView] = useState<boolean>(false);
 
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${
+        isFullView ? styles.fullView : styles.unFullView
+      }`}
+    >
       <div className={styles.shareIcon}>
         <Share size={18} color='#CDD1D5' />
       </div>
       <div className={styles.topBar}>
-        <hr />
+        <hr onClick={() => setIsFullView(!isFullView)} />
         <div className={styles.title}>{restaurentName}</div>
         <div className={styles.subTitle}>
           {visited
@@ -35,16 +39,22 @@ const VisitedEatery = ({
             : '새로운 맛집'}
         </div>
         <div className={styles.address}>{location}</div>
-        <button className={styles.addBtn}>추가하기</button>
+        {visited ?? <button className={styles.addBtn}>추가하기</button>}
         {visited && (
           <>
-            <textarea
-              name='review'
+            <p
               className={styles.review}
-              value={reviewText}
-              onChange={(e) => setReviewText(e.target.value)}
-            ></textarea>
-            <button className={styles.addBtn}>수정</button>
+              style={isFullView ? { height: '60%' } : { height: '100%' }}
+            >
+              {textContent}
+            </p>
+            <button
+              className={`${styles.modifyBtn} ${
+                isFullView ? styles.fullViewBtn : styles.unFullViewBtn
+              }`}
+            >
+              {!isFullView ? '추가하기' : '수정하기'}
+            </button>
           </>
         )}
       </div>
