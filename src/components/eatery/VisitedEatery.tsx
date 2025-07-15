@@ -21,6 +21,17 @@ const VisitedEatery = ({
   rating,
 }: Props) => {
   const [isFullView, setIsFullView] = useState<boolean>(false);
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: restaurentName,
+        text: `BabZip에서 ${restaurentName}을 공유합니다!`,
+        url: 'https://babzip.netlify.app/',
+      });
+    } else {
+      alert('공유하기를 지원하지 않는 환경입니다.');
+    }
+  };
 
   return (
     <div
@@ -28,7 +39,7 @@ const VisitedEatery = ({
         isFullView ? styles.fullView : styles.unFullView
       }`}
     >
-      <div className={styles.shareIcon}>
+      <div className={styles.shareIcon} onClick={() => handleShare()}>
         <Share size={18} color='#CDD1D5' />
       </div>
       <div className={styles.topBar}>
