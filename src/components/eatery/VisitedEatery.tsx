@@ -1,4 +1,5 @@
-import { Share } from 'lucide-react';
+import { Share, Star } from 'lucide-react';
+
 import styles from './visitedEatery.module.css';
 import { useState } from 'react';
 
@@ -8,6 +9,7 @@ type Props = {
   visitedDate: Date;
   visited: boolean;
   textContent: string;
+  rating: number;
 };
 
 const VisitedEatery = ({
@@ -16,6 +18,7 @@ const VisitedEatery = ({
   visitedDate,
   visited,
   textContent,
+  rating,
 }: Props) => {
   const [isFullView, setIsFullView] = useState<boolean>(false);
 
@@ -57,6 +60,10 @@ const VisitedEatery = ({
             </button>
           </>
         )}
+      </div>
+      <div className={styles.rating}>
+        <Star size={20} fill='yellow' />
+        <span>{rating}</span>
       </div>
     </div>
   );

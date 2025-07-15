@@ -1,4 +1,5 @@
 .container {
+  transition: height 0.3s ease-in-out;
   position: relative;
   padding: 1rem 0;
   width: 100%;
@@ -12,7 +13,7 @@
 
 .shareIcon {
   position: absolute;
-  top: 2rem;
+  top: 3rem;
   left: 2rem;
   width: 2rem;
   height: 2rem;
@@ -97,4 +98,14 @@
 .unFullViewBtn {
   position: fixed;
   bottom: 1rem;
+}
+
+.rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  position: absolute;
+  right: 2rem;
+  top: 3rem;
 }
