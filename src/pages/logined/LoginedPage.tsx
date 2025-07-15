@@ -7,6 +7,7 @@ import ToggleMenuBtn from "../../components/logined/ToggleMenuBtn";
 
 function LoginedPage() {
   const [searchValue, setSearchValue] = useState<string>("");
+  const [isUnflod, setIsUnfold] = useState<boolean>(false);
 
   return (
     <div className={styles.comtainer}>
@@ -19,9 +20,15 @@ function LoginedPage() {
       />
 
       <div className={styles.bottomRightGroup}>
-        <Profile onClick={() => console.log("프로필 클릭됨")} />
-        <ListBtn onClick={() => console.log("리스트 클릭됨")} />
-        <ToggleMenuBtn onClick={() => console.log("돌아가기 클릭됨")} />
+        {!isUnflod ? (
+          <Profile onClick={() => setIsUnfold(!isUnflod)} />
+        ) : (
+          <>
+            <Profile onClick={() => console.log("프로필 클릭됨")} />
+            <ListBtn onClick={() => console.log("리스트 클릭됨")} />
+            <ToggleMenuBtn onClick={() => setIsUnfold(!isUnflod)} />
+          </>
+        )}
       </div>
     </div>
   );
