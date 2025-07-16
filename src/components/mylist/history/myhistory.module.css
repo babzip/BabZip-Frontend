@@ -1,0 +1,26 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.topBar {
+  margin-top: 1rem;
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 1.4em;
+  font-weight: 800;
+}
+
+.barBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
