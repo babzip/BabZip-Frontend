@@ -20,11 +20,11 @@ export const router = createBrowserRouter(
         <Route index element={<MainPage />} />
         <Route path='/detail' element={<DetailPage />} />
         <Route path='/review' element={<ReviewPage />} />
-        <Route path='/mylist' element={<MylistPage />} />
         <Route path='*' element={<NotfoundPage />} />
       </Route>
 
       {/* 지도 바탕이 필요없는 페이지들*/}
+      <Route path='/mylist' element={<MylistPage />} />
       <Route path='/login' element={<LoginPage />} />
     </>
   )
