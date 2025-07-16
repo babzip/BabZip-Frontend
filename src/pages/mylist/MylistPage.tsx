@@ -1,6 +1,6 @@
 import Header from '../../components/mylist/Header';
-import MyHistory from '../../components/mylist/MyHistory';
-import MyRanking from './MyRanking';
+import MyHistory from '../../components/mylist/history/MyHistory';
+import MyRanking from '../../components/mylist/ranking/MyRanking';
 import styles from './mylist.module.css';
 import { useState } from 'react';
 
