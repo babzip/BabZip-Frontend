@@ -1,6 +1,8 @@
+import { ChevronDown } from 'lucide-react';
 import EateryHistoryBar from './EateryHistoryBar';
 import type { EateryHistoryBarType } from './EateryHistoryBar';
 import SearchBar from '../../common/SearchBar';
+import SelectSortOptionModal from './SelectSortOptionModal';
 import styles from './myhistory.module.css';
 import { useState } from 'react';
 
@@ -129,11 +131,23 @@ const dummyData: EateryHistoryBarType[] = [
 
 const MyHistory = () => {
   const [searchValue, setSearchValue] = useState<string>('');
+  const [isOptionModalOn, setIsOptionModalOn] = useState<boolean>(false);
+  const [sortOption, setSortOption] = useState<'latest' | 'rating'>('latest');
+  const mappginSortOption = (option: string) => {
+    if (option === 'latest') return '최신순';
+    if (option === 'rating') return '별점순';
+  };
   return (
     <div className={styles.container}>
       <div className={styles.topBar}>
         <div className={styles.title}>내 기록</div>
-        <div className={styles.sortingBox}>최신순</div>
+        <div
+          className={styles.sortingBox}
+          onClick={() => setIsOptionModalOn(true)}
+        >
+          <div>{mappginSortOption(sortOption)}</div>
+          <ChevronDown />
+        </div>
       </div>
       <SearchBar
         value={searchValue}
@@ -144,6 +158,16 @@ const MyHistory = () => {
         {dummyData.map((ele) => (
           <EateryHistoryBar {...ele} />
         ))}
+      </div>
+      <div className={styles.modalArea}>
+        {isOptionModalOn ? (
+          <SelectSortOptionModal
+            selected={sortOption}
+            onChange={() => setSortOption}
+          />
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );

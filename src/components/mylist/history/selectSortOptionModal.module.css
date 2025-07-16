@@ -1,0 +1,29 @@
+.container {
+  padding: 2rem;
+  border: 1px solid black;
+  border-radius: 15px 15px 0 0;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.latestTab,
+.ratingTab {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 1.6em;
+  font-weight: 700;
+  margin-bottom: 3rem;
+}
+
+hr {
+  width: 20%;
+}

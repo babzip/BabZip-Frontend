@@ -24,3 +24,20 @@
   justify-content: center;
   align-items: center;
 }
+
+.sortingBox {
+  padding: 0.4rem 1.2rem;
+  border: 1px solid #cdd1d5;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+}
+
+.modalArea {
+  width: 100%;
+  position: fixed;
+  bottom: 0rem;
+}
