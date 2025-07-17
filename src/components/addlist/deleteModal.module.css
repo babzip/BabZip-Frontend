@@ -1,0 +1,50 @@
+.container {
+  width: 18rem;
+  position: fixed;
+  padding: 2rem;
+  right: 1rem;
+  top: 20rem;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  gap: 0.6rem;
+}
+
+.name {
+  font-size: 0.8em;
+  font-weight: 600;
+  color: #7d7aff;
+}
+
+.comment {
+  font-weight: 600;
+}
+
+.btnBox {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btnBox > button {
+  width: 100%;
+  padding: 0.6rem 1.6rem;
+  border-radius: 10px;
+}
+
+.addBtn {
+  background-color: #7d7aff;
+  border: none;
+  color: white;
+}
+
+.cancelBtn {
+  background-color: white;
+
+  border: 1px solid #cdd1d5;
+}

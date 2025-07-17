@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import DeleteModal from '../../addlist/DeleteModal';
 import { Pencil } from 'lucide-react';
 import RankingBar from './RankIngBar';
 import styles from './myranking.module.css';
@@ -34,6 +35,8 @@ type Props = {
 const MyRanking = ({ addData }: Props) => {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [rankData, setRankData] = useState<RankingDataType[]>(dummyRankData);
+  const [isDeleteModalOn, setIsDeleteModalOn] = useState<boolean>(false);
+  const [selected, setSelected] = useState<RankingDataType>(rankData[0]);
 
   useEffect(() => {
     if (addData?.rank && addData.name && addData.address) {
@@ -59,7 +62,18 @@ const MyRanking = ({ addData }: Props) => {
       </div>
       <div className={styles.datas}>
         {rankData.map((data) => (
-          <RankingBar {...data} isEditMode={isEditMode} />
+          <RankingBar
+            {...data}
+            isEditMode={isEditMode}
+            onClick={
+              isEditMode
+                ? () => {
+                    setIsDeleteModalOn(true);
+                    setSelected(data);
+                  }
+                : () => {}
+            }
+          />
         ))}
       </div>
       <div className={styles.editIcon} onClick={() => setIsEditMode(true)}>
@@ -75,6 +89,22 @@ const MyRanking = ({ addData }: Props) => {
           </button>
         ) : (
           ''
+        )}
+      </div>
+      <div className={styles.modal}>
+        {isDeleteModalOn && (
+          <>
+            <div
+              className={styles.modalOverlay}
+              onClick={() => setIsDeleteModalOn(false)}
+            />
+            <div className={styles.modal}>
+              <DeleteModal
+                name={selected.eateryName ?? ''}
+                rank={selected.rank}
+              />
+            </div>
+          </>
         )}
       </div>
     </div>

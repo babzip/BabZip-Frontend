@@ -1,5 +1,6 @@
 import { ChevronLeft } from 'lucide-react';
 import styles from './header.module.css';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   selectedTab: 'history' | 'ranking';
@@ -7,10 +8,11 @@ type Props = {
 };
 
 const Header = ({ selectedTab, onChange }: Props) => {
+  const naviagete = useNavigate();
   return (
     <div className={styles.container}>
       <div className={styles.topBar}>
-        <ChevronLeft className={styles.icon} />
+        <ChevronLeft className={styles.icon} onClick={() => naviagete('/')} />
         <div>리스트</div>
       </div>
       <div className={styles.selectTab}>

@@ -4,9 +4,16 @@ import { useNavigate } from 'react-router-dom';
 
 interface Props extends RankingDataType {
   isEditMode: boolean;
+  onClick: () => void;
 }
 
-const RankingBar = ({ rank, eateryName, address, isEditMode }: Props) => {
+const RankingBar = ({
+  rank,
+  eateryName,
+  address,
+  isEditMode,
+  onClick,
+}: Props) => {
   const navigate = useNavigate();
   const mappingRankIcon = (rank: number) => {
     if (rank == 1) return <img src='/gold_spoon.svg' />;
@@ -15,7 +22,7 @@ const RankingBar = ({ rank, eateryName, address, isEditMode }: Props) => {
     else return rank;
   };
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={onClick}>
       <div className={styles.ranking}>{mappingRankIcon(rank)}</div>
       <div className={styles.info}>
         <div
