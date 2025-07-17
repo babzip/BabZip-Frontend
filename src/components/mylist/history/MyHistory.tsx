@@ -160,13 +160,22 @@ const MyHistory = () => {
         ))}
       </div>
       <div className={styles.modalArea}>
-        {isOptionModalOn ? (
-          <SelectSortOptionModal
-            selected={sortOption}
-            onChange={() => setSortOption}
-          />
-        ) : (
-          ''
+        {isOptionModalOn && (
+          <>
+            <div
+              className={styles.modalOverlay}
+              onClick={() => setIsOptionModalOn(false)}
+            />
+            <div className={styles.modalArea}>
+              <SelectSortOptionModal
+                selected={sortOption}
+                onChange={(option) => {
+                  setSortOption(option);
+                  setIsOptionModalOn(false);
+                }}
+              />
+            </div>
+          </>
         )}
       </div>
     </div>
