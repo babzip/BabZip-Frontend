@@ -1,11 +1,13 @@
+import { Pencil } from 'lucide-react';
 import RankingBar from './RankIngBar';
 import styles from './myranking.module.css';
+import { useState } from 'react';
 
-export type RankingDataType = {
+export interface RankingDataType {
   rank: number;
-  eateryName: string;
-  address: string;
-};
+  eateryName: string | null;
+  address: string | null;
+}
 
 const dummyRankData: RankingDataType[] = [
   { rank: 1, eateryName: '맛있는집', address: '서울시 강남구 강남대로 1길' },
@@ -18,13 +20,14 @@ const dummyRankData: RankingDataType[] = [
     eateryName: '브런치타임',
     address: '제주시 구좌읍 해맞이해안로 123',
   },
-  { rank: 7, eateryName: '치킨마스터', address: '대구시 수성구 달구벌대로 45' },
+  { rank: 7, eateryName: null, address: null },
   { rank: 8, eateryName: '곱창의신', address: '광주시 북구 하남대로 87' },
   { rank: 9, eateryName: '떡볶이연구소', address: '수원시 영통구 대학로 17' },
   { rank: 10, eateryName: '칼국수본점', address: '청주시 상당구 상당로 101' },
 ];
 
 const MyRanking = () => {
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
   return (
     <div className={styles.container}>
       <div className={styles.title}>
@@ -32,8 +35,23 @@ const MyRanking = () => {
       </div>
       <div className={styles.datas}>
         {dummyRankData.map((data) => (
-          <RankingBar {...data} />
+          <RankingBar {...data} isEditMode={isEditMode} />
         ))}
+      </div>
+      <div className={styles.editIcon} onClick={() => setIsEditMode(true)}>
+        <Pencil size={25} color='#7D7AFF' fill='white' />
+      </div>
+      <div className={styles.btnBox}>
+        {isEditMode ? (
+          <button
+            className={styles.doneBtn}
+            onClick={() => setIsEditMode(false)}
+          >
+            완료
+          </button>
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );
