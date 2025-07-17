@@ -61,3 +61,26 @@
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 }
+
+.pageBar {
+  margin: 2rem;
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pageNumber {
+  width: 1.4rem;
+  height: 1.4rem;
+  padding: 0.4rem;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.selected {
+  background-color: #7d7aff;
+  color: white;
+}

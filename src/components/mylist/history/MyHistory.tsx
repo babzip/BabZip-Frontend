@@ -1,4 +1,5 @@
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import EateryHistoryBar from './EateryHistoryBar';
 import type { EateryHistoryBarType } from './EateryHistoryBar';
 import SearchBar from '../../common/SearchBar';
@@ -133,6 +134,7 @@ const MyHistory = () => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [isOptionModalOn, setIsOptionModalOn] = useState<boolean>(false);
   const [sortOption, setSortOption] = useState<'latest' | 'rating'>('latest');
+  const [selectedPage, setSelectdPage] = useState(1);
   const mappginSortOption = (option: string) => {
     if (option === 'latest') return '최신순';
     if (option === 'rating') return '별점순';
@@ -177,6 +179,51 @@ const MyHistory = () => {
             </div>
           </>
         )}
+      </div>
+      <div className={styles.pageBar}>
+        <ChevronLeft size={25} />
+        <div
+          className={`${styles.pageNumber} ${
+            selectedPage === 1 ? styles.selected : ''
+          }`}
+          onClick={() => setSelectdPage(1)}
+        >
+          1
+        </div>
+        <div
+          className={`${styles.pageNumber} ${
+            selectedPage === 2 ? styles.selected : ''
+          }`}
+          onClick={() => setSelectdPage(2)}
+        >
+          2
+        </div>
+        <div
+          className={`${styles.pageNumber} ${
+            selectedPage === 3 ? styles.selected : ''
+          }`}
+          onClick={() => setSelectdPage(3)}
+        >
+          3
+        </div>
+        <div
+          className={`${styles.pageNumber} ${
+            selectedPage === 4 ? styles.selected : ''
+          }`}
+          onClick={() => setSelectdPage(4)}
+        >
+          4
+        </div>
+        <div
+          className={`${styles.pageNumber} ${
+            selectedPage === 5 ? styles.selected : ''
+          }`}
+          onClick={() => setSelectdPage(5)}
+        >
+          5
+        </div>
+
+        <ChevronRight size={25} />
       </div>
     </div>
   );
