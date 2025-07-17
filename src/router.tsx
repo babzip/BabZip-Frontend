@@ -9,6 +9,7 @@ import DetailPage from './pages/detail/DetailPage';
 import Kakaomap from './pages/map/Kakaomap';
 import LoginPage from './pages/login/LoginPage';
 import MainPage from './pages/main/MainPage';
+import MyPage from './pages/mypage/MyPage';
 import MylistPage from './pages/mylist/MylistPage';
 import NotfoundPage from './pages/notfound/NotfoundPage';
 import ReviewPage from './pages/review/ReviewPage';
@@ -27,6 +28,7 @@ export const router = createBrowserRouter(
       {/* 지도 바탕이 필요없는 페이지들*/}
       <Route path='/mylist' element={<MylistPage />} />
       <Route path='/mylist/addlist' element={<AddListPage />} />
+      <Route path='/mypage' element={<MyPage />} />
       <Route path='/login' element={<LoginPage />} />
     </>
   )
