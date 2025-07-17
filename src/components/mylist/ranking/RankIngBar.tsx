@@ -32,7 +32,9 @@ const RankingBar = ({ rank, eateryName, address, isEditMode }: Props) => {
         </div>
         <div className={styles.addBtnBox}>
           {!eateryName && isEditMode ? (
-            <button onClick={() => navigate('/mylist/addlist')}>
+            <button
+              onClick={() => navigate('/mylist/addlist', { state: { rank } })}
+            >
               추가하기
             </button>
           ) : (

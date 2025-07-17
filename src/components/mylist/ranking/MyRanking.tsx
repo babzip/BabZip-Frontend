@@ -1,7 +1,8 @@
+import { useEffect, useState } from 'react';
+
 import { Pencil } from 'lucide-react';
 import RankingBar from './RankIngBar';
 import styles from './myranking.module.css';
-import { useState } from 'react';
 
 export interface RankingDataType {
   rank: number;
@@ -26,15 +27,38 @@ const dummyRankData: RankingDataType[] = [
   { rank: 10, eateryName: '칼국수본점', address: '청주시 상당구 상당로 101' },
 ];
 
-const MyRanking = () => {
+type Props = {
+  addData?: { name: string; address: string; rank: number };
+};
+
+const MyRanking = ({ addData }: Props) => {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  const [rankData, setRankData] = useState<RankingDataType[]>(dummyRankData);
+
+  useEffect(() => {
+    if (addData?.rank && addData.name && addData.address) {
+      setRankData((prev) =>
+        prev.map((item) =>
+          item.rank === addData.rank
+            ? {
+                ...item,
+                eateryName: addData.name,
+                address: addData.address,
+              }
+            : item
+        )
+      );
+    }
+    console.log(rankData);
+  }, [addData]);
+
   return (
     <div className={styles.container}>
       <div className={styles.title}>
         <span>TOP 10</span>
       </div>
       <div className={styles.datas}>
-        {dummyRankData.map((data) => (
+        {rankData.map((data) => (
           <RankingBar {...data} isEditMode={isEditMode} />
         ))}
       </div>

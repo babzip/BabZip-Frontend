@@ -8,14 +8,19 @@ export interface EateryHistoryBarType {
   visitiedAt: Date;
 }
 
+interface Props extends EateryHistoryBarType {
+  onClick: () => void;
+}
+
 const EateryHistoryBar = ({
   rating,
   name,
   address,
   visitiedAt,
-}: EateryHistoryBarType) => {
+  onClick,
+}: Props) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={onClick}>
       <div className={styles.ratingBox}>
         <Star size={25} color='yellow' fill='yellow' />
         <div className={styles.score}>{rating.toPrecision(2)}</div>
