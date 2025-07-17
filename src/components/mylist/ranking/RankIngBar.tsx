@@ -1,7 +1,13 @@
 import type { RankingDataType } from './MyRanking';
 import styles from './rankingBar.module.css';
+import { useNavigate } from 'react-router-dom';
 
-const RankingBar = ({ rank, eateryName, address }: RankingDataType) => {
+interface Props extends RankingDataType {
+  isEditMode: boolean;
+}
+
+const RankingBar = ({ rank, eateryName, address, isEditMode }: Props) => {
+  const navigate = useNavigate();
   const mappingRankIcon = (rank: number) => {
     if (rank == 1) return <img src='/gold_spoon.svg' />;
     if (rank == 2) return <img src='/silver_spoon.svg' />;
@@ -12,8 +18,30 @@ const RankingBar = ({ rank, eateryName, address }: RankingDataType) => {
     <div className={styles.container}>
       <div className={styles.ranking}>{mappingRankIcon(rank)}</div>
       <div className={styles.info}>
-        <div className={styles.name}>{eateryName}</div>
-        <div className={styles.address}>{address}</div>
+        <div
+          className={styles.name}
+          style={!eateryName ? { display: 'none' } : undefined}
+        >
+          {eateryName}
+        </div>
+        <div
+          className={styles.address}
+          style={!eateryName ? { display: 'none' } : undefined}
+        >
+          {address}
+        </div>
+        <div className={styles.addBtnBox}>
+          {!eateryName && isEditMode ? (
+            <button onClick={() => navigate('/mylist/addlist')}>
+              추가하기
+            </button>
+          ) : (
+            ''
+          )}
+        </div>
+      </div>
+      <div className={styles.dragable}>
+        {isEditMode ? <img src='/dragable_icon.svg' alt='' /> : ''}
       </div>
     </div>
   );
