@@ -1,0 +1,34 @@
+.container {
+  padding: 1rem 2rem;
+  border-radius: 15px 15px 0 0;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.latestTab,
+.ratingTab {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2em;
+  font-weight: 400;
+  margin: 0.4rem;
+}
+
+.title {
+  font-size: 1.6em;
+  font-weight: 700;
+  margin-bottom: 3rem;
+}
+
+hr {
+  width: 20%;
+  background-color: #cdd1d5;
+  height: 2px;
+  border: none;
+}

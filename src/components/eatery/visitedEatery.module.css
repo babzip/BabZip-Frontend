@@ -1,0 +1,111 @@
+.container {
+  transition: height 0.3s ease-in-out;
+  position: relative;
+  padding: 1rem 0;
+  width: 100%;
+  border-radius: 15px 15px 0 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+.shareIcon {
+  position: absolute;
+  top: 3rem;
+  left: 2rem;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid #cdd1d5;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.topBar {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.topBar > hr {
+  border: 1px solid #cdd1d5;
+  width: 5rem;
+  margin-bottom: 1.4rem;
+}
+
+.title {
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+.subTitle {
+  color: #7d7aff;
+}
+
+.address {
+  margin-bottom: 1rem;
+}
+
+.addBtn {
+  margin: 1.2rem 0;
+  width: 70%;
+  height: 2.5rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #7d7aff;
+  color: white;
+}
+
+.review {
+  padding: 1rem;
+  width: 70%;
+  height: 40%;
+  margin-bottom: 1rem;
+  border: 1px solid #cdd1d5;
+  border-radius: 10px;
+}
+
+.modifyBtn {
+  width: 70%;
+  height: 2.5rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #7d7aff;
+  color: white;
+  position: fixed;
+  bottom: 1rem;
+}
+
+.fullView {
+  height: 100vh;
+}
+
+.unFullView {
+  height: 50%;
+}
+
+.fullViewBtn {
+  position: static;
+}
+
+.unFullViewBtn {
+  position: fixed;
+  bottom: 1rem;
+}
+
+.rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  position: absolute;
+  right: 2rem;
+  top: 3rem;
+}
