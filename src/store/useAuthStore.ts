@@ -13,6 +13,7 @@ export const useAuthStore = createStore(
           name: null,
           restaurantCount: null,
           averageRating: null,
+          picture: null,
         }),
       name: null,
       setName: (name: string) => set({ name: name }),
@@ -22,6 +23,8 @@ export const useAuthStore = createStore(
       setAverageRating: (rating: number) => set({ averageRating: rating }),
       provider: null,
       setProvider: (provider: string) => set({ provider: provider }),
+      picture: null,
+      setPicture: (url: string) => set({ picture: url }),
     }),
     { name: 'localStorage' }
   )

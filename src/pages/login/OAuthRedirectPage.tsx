@@ -22,6 +22,7 @@ function OAuthRedirectPage() {
         restaurantCount: response.data.data.restaurantCount,
         averageRating: response.data.data.averageRating,
         provider: response.data.data.provider,
+        picture: response.data.data.picture,
       });
 
       navigate('/', { replace: true });

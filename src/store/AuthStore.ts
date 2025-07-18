@@ -7,4 +7,5 @@ export type AuthStore = {
   restaurantCount: number | null;
   averageRating: number | null;
   provider: string | null;
+  picture: string | null;
 };
