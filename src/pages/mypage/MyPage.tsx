@@ -1,23 +1,25 @@
-import { ChevronRight } from 'lucide-react';
-import Header from '../../components/mypage/Header';
-import styles from './mypage.module.css';
-import { useState } from 'react';
+import { ChevronRight } from "lucide-react";
+import Header from "../../components/mypage/Header";
+import styles from "./mypage.module.css";
+import { useEffect, useState } from "react";
 
 const dummyData = {
-  name: '홍길동',
+  name: "홍길동",
   numOfFoods: 100,
   rating: 5.0,
-  account: 'kakao',
+  account: "kakao",
 };
 
 function MyPage() {
   const [profileData, setProfileData] = useState(dummyData);
-  setProfileData(dummyData);
+  useEffect(() => {
+    setProfileData(dummyData);
+  }, []);
   return (
     <div className={styles.container}>
       <Header />
       <div className={styles.profileImg}>
-        <img src='/' alt='프로필이미지' />
+        <img src="/" alt="프로필이미지" />
       </div>
       <div className={styles.nickname}>
         <div>닉네임</div>
@@ -39,10 +41,10 @@ function MyPage() {
       <div className={styles.socialAccount}>
         <div>연동된 소셜 계정</div>
         <div className={styles.iconBox}>
-          {profileData.account === 'kakao' ? (
-            <img src='/kakao_icon.svg' />
+          {profileData.account === "kakao" ? (
+            <img src="/kakao_icon.svg" />
           ) : (
-            <img src='/google_icon.svg' />
+            <img src="/google_icon.svg" />
           )}
         </div>
       </div>
@@ -51,7 +53,7 @@ function MyPage() {
         <div className={styles.logout}>로그아웃</div>
         <div
           className={styles.quit}
-          onClick={() => console.log('어딜나가잉 시져시져')}
+          onClick={() => console.log("어딜나가잉 시져시져")}
         >
           회원 탈퇴
         </div>
