@@ -1,4 +1,4 @@
-import styles from "./profile.module.css";
+import styles from './profile.module.css';
 
 type Props = {
   onClick: () => void;
@@ -7,7 +7,7 @@ type Props = {
 const Profile = ({ onClick }: Props) => {
   return (
     <div className={styles.container} onClick={onClick}>
-      <img src="/Ellipse.png" alt="프로필" className={styles.image} />
+      <img src='/Ellipse.png' alt='프로필' className={styles.image} />
     </div>
   );
 };

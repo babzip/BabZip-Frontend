@@ -1,4 +1,5 @@
-import styles from "./toggleMenuBtn.module.css";
+import { ChevronDown } from 'lucide-react';
+import styles from './toggleMenuBtn.module.css';
 
 type Props = {
   onClick: () => void;
@@ -7,7 +8,7 @@ type Props = {
 const ToggleMenuBtn = ({ onClick }: Props) => {
   return (
     <div className={styles.container} onClick={onClick}>
-      <img src="/Ellipse.png" alt="돌아가기" className={styles.image} />
+      <ChevronDown size={28} />
     </div>
   );
 };
