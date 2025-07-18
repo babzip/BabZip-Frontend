@@ -1,3 +1,4 @@
+import { memo } from "react";
 import styles from "./reviewPage.module.css";
 
 const ReviewPage = () => {
@@ -10,11 +11,10 @@ const ReviewPage = () => {
       <div className={styles.images}>
         <img src="/food1.jpg" alt="음식1" className={styles.image} />
         <img src="/food2.jpg" alt="음식2" className={styles.image} />
+        <img src="/food2.jpg" alt="음식3" className={styles.image} />
       </div>
 
-      <div className={styles.memoBox}>
-        <p className={styles.memo}>메모가 된 메시지 </p>
-      </div>
+      <textarea className={styles.memo}>메모가 된 메세지</textarea>
 
       <button className={styles.editBtn}>수정</button>
     </div>
