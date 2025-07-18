@@ -15,7 +15,7 @@ function OAuthRedirectPage() {
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
 
-      navigate('/');
+      navigate('/', { replace: true });
     } else {
       console.error('토큰 없음');
     }
