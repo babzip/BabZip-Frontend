@@ -1,0 +1,42 @@
+.container {
+  padding: 1.2rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.topBar {
+  display: flex;
+  flex-direction: row;
+}
+
+.topBar > div {
+  font-size: 1.2em;
+  font-weight: 800;
+}
+
+.icon {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+
+.selectTab {
+  border-bottom: 1px solid #cdd1d5;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.selectTab > div {
+  padding: 0.6rem 1.2rem;
+}
+
+.selected {
+  border-bottom: 2px solid black;
+}

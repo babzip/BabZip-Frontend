@@ -1,0 +1,86 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.topBar {
+  margin-top: 1rem;
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 1.4em;
+  font-weight: 800;
+}
+
+.barBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sortingBox {
+  padding: 0.4rem 1.2rem;
+  border: 1px solid #cdd1d5;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+}
+
+.modalArea {
+  width: 100%;
+  position: fixed;
+  bottom: 0rem;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 100;
+}
+
+.modalArea {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 101;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.pageBar {
+  margin: 2rem;
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pageNumber {
+  width: 1.4rem;
+  height: 1.4rem;
+  padding: 0.4rem;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.selected {
+  background-color: #7d7aff;
+  color: white;
+}
