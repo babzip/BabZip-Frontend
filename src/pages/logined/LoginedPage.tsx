@@ -1,4 +1,5 @@
 import { useState, type ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import SearchBar from "../../components/common/SearchBar";
 import styles from "./loginedPage.module.css";
 import Profile from "../../components/logined/Profile";
@@ -8,6 +9,7 @@ import ToggleMenuBtn from "../../components/logined/ToggleMenuBtn";
 function LoginedPage() {
   const [searchValue, setSearchValue] = useState<string>("");
   const [isUnflod, setIsUnfold] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   return (
     <div className={styles.comtainer}>
@@ -24,8 +26,8 @@ function LoginedPage() {
           <Profile onClick={() => setIsUnfold(!isUnflod)} />
         ) : (
           <>
-            <Profile onClick={() => console.log("프로필 클릭됨")} />
-            <ListBtn onClick={() => console.log("리스트 클릭됨")} />
+            <Profile onClick={() => navigate("/mypage")} />
+            <ListBtn onClick={() => navigate("/mylist")} />
             <ToggleMenuBtn onClick={() => setIsUnfold(!isUnflod)} />
           </>
         )}
