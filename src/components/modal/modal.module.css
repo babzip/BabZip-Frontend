@@ -1,0 +1,48 @@
+.image {
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  margin-top: 40px;
+}
+
+.text {
+  font-size: 18px;
+  color: #333;
+  text-align: center;
+}
+
+.DelBtn {
+  width: 100%;
+  padding: 10px;
+  background-color: #7d7aff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.CancelBtn {
+  width: 100%;
+  padding: 10px;
+  background-color: #e0e0e0;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: 60%;
+  padding: 20px;
+}
+
+.wrapper {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

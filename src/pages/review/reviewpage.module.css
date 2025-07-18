@@ -1,0 +1,73 @@
+.container {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 20px;
+  height: 729px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  font-size: 23px;
+  font-weight: bold;
+  margin-top: 14px;
+  margin-bottom: 0px;
+}
+
+.address {
+  display: flex;
+  justify-content: center;
+  color: black;
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+
+.date {
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  color: #7d7aff;
+  margin: 10px;
+}
+
+.images {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.memo {
+  width: 329px;
+  height: 400px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  justify-content: center;
+  margin: 30px;
+}
+
+.editBtn {
+  display: flex;
+  align-self: center;
+  padding: 10px 20px;
+  background-color: #7d7aff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  justify-content: center;
+  width: 289px;
+  height: 40px;
+}
