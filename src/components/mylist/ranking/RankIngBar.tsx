@@ -8,8 +8,8 @@ interface Props extends RankingDataType {
 }
 
 const RankingBar = ({
-  rank,
-  eateryName,
+  rankValue,
+  restaurantName,
   address,
   isEditMode,
   onClick,
@@ -23,24 +23,26 @@ const RankingBar = ({
   };
   return (
     <div className={styles.container} onClick={onClick}>
-      <div className={styles.ranking}>{mappingRankIcon(rank)}</div>
+      <div className={styles.ranking}>{mappingRankIcon(rankValue)}</div>
       <div className={styles.info}>
         <div
           className={styles.name}
-          style={!eateryName ? { display: 'none' } : undefined}
+          style={!restaurantName ? { display: 'none' } : undefined}
         >
-          {eateryName}
+          {restaurantName}
         </div>
         <div
           className={styles.address}
-          style={!eateryName ? { display: 'none' } : undefined}
+          style={!restaurantName ? { display: 'none' } : undefined}
         >
           {address}
         </div>
         <div className={styles.addBtnBox}>
-          {!eateryName && isEditMode ? (
+          {!restaurantName && isEditMode ? (
             <button
-              onClick={() => navigate('/mylist/addlist', { state: { rank } })}
+              onClick={() =>
+                navigate('/mylist/addlist', { state: { rankValue } })
+              }
             >
               추가하기
             </button>
