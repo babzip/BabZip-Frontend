@@ -1,0 +1,71 @@
+.container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 393px;
+  height: 729px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.date,
+.address {
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  color: #666;
+}
+
+.images {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.memoBox {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  width: 329px;
+  height: 422px;
+  justify-content: center;
+}
+
+.memo {
+  font-size: 14px;
+  color: #333;
+  margin: 0;
+}
+
+.editBtn {
+  align-self: center;
+  padding: 10px 20px;
+  background-color: #7d7aff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  justify-content: center;
+  width: 289px;
+  height: 40px;
+}
