@@ -158,7 +158,7 @@ const MyHistory = () => {
       />
       <div className={styles.barBox}>
         {dummyData.map((ele) => (
-          <EateryHistoryBar {...ele} />
+          <EateryHistoryBar onClick={() => {}} {...ele} />
         ))}
       </div>
       <div className={styles.modalArea}>

@@ -12,6 +12,7 @@ const dummyData = {
 
 function MyPage() {
   const [profileData, setProfileData] = useState(dummyData);
+  setProfileData(dummyData);
   return (
     <div className={styles.container}>
       <Header />
