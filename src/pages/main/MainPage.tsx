@@ -13,6 +13,7 @@ function MainPage() {
   const [isUnflod, setIsUnfold] = useState<boolean>(false);
   const navigate = useNavigate();
   const isLoggedIn = useAuthStore.getState().isLoggedIn;
+  const imgUrl = useAuthStore.getState().picture;
   return (
     <div className={styles.container}>
       <SearchBar
@@ -30,10 +31,13 @@ function MainPage() {
             }}
           />
         ) : !isUnflod ? (
-          <Profile onClick={() => setIsUnfold(true)} />
+          <Profile imgUrl={imgUrl ?? ''} onClick={() => setIsUnfold(true)} />
         ) : (
           <div className={styles.btnBox}>
-            <Profile onClick={() => navigate('/mypage')} />
+            <Profile
+              imgUrl={imgUrl ?? ''}
+              onClick={() => navigate('/mypage')}
+            />
             <ListBtn onClick={() => navigate('/mylist')} />
             <ToggleMenuBtn onClick={() => setIsUnfold(false)} />
           </div>

@@ -1,13 +1,14 @@
 import styles from './profile.module.css';
 
 type Props = {
+  imgUrl: string;
   onClick: () => void;
 };
 
-const Profile = ({ onClick }: Props) => {
+const Profile = ({ imgUrl, onClick }: Props) => {
   return (
     <div className={styles.container} onClick={onClick}>
-      <img src='/Ellipse.png' alt='프로필' className={styles.image} />
+      <img src={imgUrl} alt='프로필' className={styles.image} />
     </div>
   );
 };
