@@ -12,6 +12,8 @@ import MylistPage from "./pages/mylist/MylistPage";
 import NotfoundPage from "./pages/notfound/NotfoundPage";
 import ReviewPage from "./pages/review/ReviewPage";
 import LoginedPage from "./pages/logined/LoginedPage";
+import AddListPage from "./pages/addlist/AddListPage";
+import MyPage from "./pages/mypage/MyPage";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,11 +24,14 @@ export const router = createBrowserRouter(
         <Route index element={<MainPage />} />
         <Route path="/detail" element={<DetailPage />} />
         <Route path="/review" element={<ReviewPage />} />
-        <Route path="/mylist" element={<MylistPage />} />
         <Route path="*" element={<NotfoundPage />} />
       </Route>
 
       {/* 지도 바탕이 필요없는 페이지들*/}
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/mylist" element={<MylistPage />} />
+      <Route path="/mylist/addList" element={<AddListPage />} />
+      <Route path="/mypage" element={<MyPage />} />
       <Route path="/login" element={<LoginPage />} />
     </>
   )
