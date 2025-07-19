@@ -40,7 +40,7 @@ const VisitedEatery = ({
   return (
     <div
       className={`${styles.container} ${
-        isFullView ? styles.fullView : styles.unFullView
+        isFullView && visited ? styles.fullView : styles.unFullView
       }`}
     >
       <div className={styles.shareIcon} onClick={() => handleShare()}>
