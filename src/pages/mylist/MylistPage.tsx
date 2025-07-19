@@ -11,9 +11,6 @@ function MylistPage() {
     'history'
   );
   const location = useLocation();
-  const name = location.state?.name;
-  const address = location.state?.address;
-  const rank = location.state?.rank;
   const page = location.state?.page;
 
   useEffect(() => {
@@ -25,11 +22,7 @@ function MylistPage() {
   return (
     <div className={styles.container}>
       <Header selectedTab={selectedTab} onChange={setSelectedTab} />
-      {selectedTab === 'history' ? (
-        <MyHistory />
-      ) : (
-        <MyRanking addData={{ name, address, rank }} />
-      )}
+      {selectedTab === 'history' ? <MyHistory /> : <MyRanking />}
     </div>
   );
 }

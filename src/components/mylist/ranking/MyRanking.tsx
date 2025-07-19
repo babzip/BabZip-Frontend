@@ -10,11 +10,7 @@ import {
   type RankingDataType,
 } from '../../../store/useTop10Store';
 
-type Props = {
-  addData?: { name: string; address: string; rank: number };
-};
-
-const MyRanking = ({ addData }: Props) => {
+const MyRanking = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isDeleteModalOn, setIsDeleteModalOn] = useState(false);
   const [selectedRank, setSelectedRank] = useState(0);
@@ -54,14 +50,15 @@ const MyRanking = ({ addData }: Props) => {
   };
 
   useEffect(() => {
-    getTop10Data();
-  }, []);
+    if (hasChanged(rankData, originalRankData)) {
+      editTop10Data(rankData);
+      setOriginalRankData(rankData);
+    }
+  }, [rankData]);
 
   useEffect(() => {
-    if (addData?.rank && addData.name && addData.address) {
-      updateRank(addData.rank, addData.name, addData.address);
-    }
-  }, [addData]);
+    getTop10Data();
+  }, []);
 
   return (
     <div className={styles.container}>
