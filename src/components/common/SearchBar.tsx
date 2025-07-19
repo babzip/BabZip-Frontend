@@ -45,6 +45,14 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
   const [isModalOn, setIsModalOn] = useState<boolean>(false);
   const [resultOn, setResultOn] = useState<boolean>(false);
   const [isWriteModalOn, setIsWriteModalOn] = useState<boolean>(false);
+  const [isModifyModalOn, setIsModifyModalOn] = useState<boolean>(false);
+  const [postInfo, setPostInfo] = useState<{
+    restaurantName: string;
+    address: string;
+    content: string;
+    rating: number;
+    createdAt: Date;
+  }>();
   const accessToken = localStorage.getItem('accessToken');
 
   const searchVisited = async (query: string) => {
@@ -60,6 +68,8 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
         return false;
       }
       if (response.data.data.content.length != 0) {
+        setPostInfo(response.data.data.content[0]);
+        console.log('[postinfo] ', postInfo);
         return true;
       }
     } catch (err) {
@@ -94,7 +104,7 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
   const handleSelectData = async (ele: searchResultType) => {
     setSelectedData(ele);
     const isVisited = await searchVisited(ele.place_name);
-    setVisited(isVisited);
+    setVisited(isVisited ?? false);
     setResultOn(false);
     setIsModalOn(true);
   };
@@ -125,6 +135,10 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
       <div className={styles.modal}>
         {isModalOn ? (
           <VisitedEatery
+            onModifyClicked={() => {
+              setIsModalOn(false);
+              setIsModifyModalOn(true);
+            }}
             onAddClicked={() => {
               setIsModalOn(false);
               setIsWriteModalOn(true);
@@ -132,9 +146,9 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
             location={selectedData.address_name}
             visited={visited}
             restaurentName={selectedData.place_name}
-            rating={0}
+            rating={postInfo?.rating ?? 0}
             visitedDate={new Date('2024-11-19')}
-            textContent={selectedData.category_name}
+            textContent={postInfo?.content ?? ''}
           />
         ) : (
           ''
@@ -148,6 +162,21 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
             kakaoPlaceId={selectedData.id}
             name={selectedData.place_name}
             visitedDate={new Date()}
+          />
+        ) : (
+          ''
+        )}
+      </div>
+      <div className={styles.modifyModal}>
+        {isModifyModalOn ? (
+          <ReviewPage
+            initialContent={postInfo?.content}
+            initialRating={postInfo?.rating}
+            closeModal={() => setIsModifyModalOn(false)}
+            address={postInfo?.address ?? ''}
+            kakaoPlaceId={selectedData.id}
+            name={postInfo?.restaurantName ?? ''}
+            visitedDate={new Date(postInfo?.createdAt ?? new Date())}
           />
         ) : (
           ''
