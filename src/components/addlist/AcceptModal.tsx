@@ -5,9 +5,10 @@ type Props = {
   name: string;
   address: string;
   rank: number;
+  onCancel: () => void;
 };
 
-const AcceptModal = ({ name, address, rank }: Props) => {
+const AcceptModal = ({ name, address, rank, onCancel }: Props) => {
   const navigate = useNavigate();
   const page = 'ranking';
   return (
@@ -25,7 +26,9 @@ const AcceptModal = ({ name, address, rank }: Props) => {
           추가
         </button>
 
-        <button className={styles.cancelBtn}>취소</button>
+        <button className={styles.cancelBtn} onClick={onCancel}>
+          취소
+        </button>
       </div>
     </div>
   );

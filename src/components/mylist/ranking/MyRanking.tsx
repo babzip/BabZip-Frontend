@@ -5,150 +5,134 @@ import { Pencil } from 'lucide-react';
 import RankingBar from './RankIngBar';
 import axios from 'axios';
 import styles from './myranking.module.css';
-
-export interface RankingDataType {
-  rankValue: number;
-  restaurantName: string | null;
-  address: string | null;
-}
+import {
+  useTop10Store,
+  type RankingDataType,
+} from '../../../store/useTop10Store';
 
 type Props = {
   addData?: { name: string; address: string; rank: number };
 };
 
 const MyRanking = ({ addData }: Props) => {
-  const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  const [rankData, setRankData] = useState<RankingDataType[]>();
-  const [isDeleteModalOn, setIsDeleteModalOn] = useState<boolean>(false);
-  const [selected, setSelected] = useState<RankingDataType>({
-    rankValue: 0,
-    restaurantName: '',
-    address: '',
-  });
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [isDeleteModalOn, setIsDeleteModalOn] = useState(false);
+  const [selectedRank, setSelectedRank] = useState(0);
+  const [originalRankData, setOriginalRankData] = useState<RankingDataType[]>(
+    []
+  );
   const accessToken = localStorage.getItem('accessToken');
+
+  const { setRankData, updateRank, clearRank } = useTop10Store();
+  const rankData = useTop10Store((state) => state.rankData);
 
   const getTop10Data = async () => {
     try {
-      const response = await axios.get('https://babzip.duckdns.org/top10', {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+      const res = await axios.get('https://babzip.duckdns.org/top10', {
+        headers: { Authorization: `Bearer ${accessToken}` },
       });
-      console.log('[top10 data] : ', response.data);
-      setRankData(response.data.data.content);
+      setRankData(res.data.data.content);
+      setOriginalRankData(res.data.data.content);
     } catch (err) {
-      console.error(err);
+      console.error('[top10 get 에러] :', err);
     }
   };
 
-  const editTop10Data = async () => {
+  const editTop10Data = async (data) => {
     try {
-      const response = await axios.post(
-        'https://babzip.duckdns.org/top10',
-        rankData,
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        }
-      );
-      console.log(response.status === 200);
+      const res = await axios.post('https://babzip.duckdns.org/top10', data, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      console.log('[top10 저장 완료]');
     } catch (err) {
-      console.error('[에러 발생] : ', err);
+      console.error('[top10 저장 에러] :', err);
     }
   };
 
-  useEffect(() => {
-    console.log('addData:', addData);
-    console.log('rankData:', rankData);
-    if (addData?.rank && addData.name && addData.address) {
-      setRankData((prev) =>
-        prev
-          ? prev.map((item) =>
-              item.rankValue === addData.rank
-                ? {
-                    ...item,
-                    restaurantName: addData.name,
-                    address: addData.address,
-                  }
-                : item
-            )
-          : []
-      );
-    }
-    console.log(rankData);
-  }, [addData]);
-
-  useEffect(() => {
-    editTop10Data();
-  }, [rankData]);
+  const hasChanged = (a: RankingDataType[], b: RankingDataType[]) => {
+    return JSON.stringify(a) !== JSON.stringify(b);
+  };
 
   useEffect(() => {
     getTop10Data();
   }, []);
+
+  useEffect(() => {
+    if (addData?.rank && addData.name && addData.address) {
+      updateRank(addData.rank, addData.name, addData.address);
+    }
+  }, [addData]);
 
   return (
     <div className={styles.container}>
       <div className={styles.title}>
         <span>TOP 10</span>
       </div>
+
       <div className={styles.datas}>
-        {rankData?.map((data, index) => (
+        {rankData.map((data, idx) => (
           <RankingBar
-            key={index}
+            key={idx}
             {...data}
             isEditMode={isEditMode}
             onClick={
               isEditMode
                 ? () => {
+                    setSelectedRank(data.rankValue);
                     setIsDeleteModalOn(true);
-                    setSelected(data);
                   }
                 : () => {}
             }
           />
         ))}
       </div>
+
       <div className={styles.editIcon} onClick={() => setIsEditMode(true)}>
         <Pencil size={25} color='#7D7AFF' fill='white' />
       </div>
-      <div className={styles.btnBox}>
-        {isEditMode ? (
+
+      {isEditMode && (
+        <div className={styles.btnBox}>
           <button
             className={styles.doneBtn}
-            onClick={() => setIsEditMode(false)}
+            onClick={() => {
+              setIsEditMode(false);
+              if (hasChanged(rankData, originalRankData)) {
+                editTop10Data(rankData);
+                setOriginalRankData(rankData);
+              }
+            }}
           >
             완료
           </button>
-        ) : (
-          ''
-        )}
-      </div>
-      <div className={styles.modal}>
-        {isDeleteModalOn && (
-          <>
-            <div
-              className={styles.modalOverlay}
-              onClick={() => setIsDeleteModalOn(false)}
+        </div>
+      )}
+
+      {isDeleteModalOn && (
+        <>
+          <div
+            className={styles.modalOverlay}
+            onClick={() => setIsDeleteModalOn(false)}
+          />
+          <div className={styles.modal}>
+            <DeleteModal
+              onDelete={() => {
+                clearRank(selectedRank);
+                const updated = useTop10Store.getState().rankData;
+                editTop10Data(updated);
+
+                setOriginalRankData(updated);
+                setIsDeleteModalOn(false);
+              }}
+              onCancel={() => setIsDeleteModalOn(false)}
+              name={
+                rankData.find((item) => item.rankValue === selectedRank)
+                  ?.restaurantName ?? ''
+              }
             />
-            <div className={styles.modal}>
-              <DeleteModal
-                onDelete={() => {
-                  setRankData((prev) =>
-                    prev
-                      ? prev.map((item) =>
-                          item.rankValue === selected.rankValue
-                            ? { ...item, restaurantName: null, address: null }
-                            : item
-                        )
-                      : []
-                  );
-                }}
-                onCancel={() => setIsDeleteModalOn(false)}
-                name={selected.restaurantName ?? ''}
-              />
-            </div>
-          </>
-        )}
-      </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
