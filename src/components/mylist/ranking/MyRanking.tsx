@@ -41,6 +41,21 @@ const MyRanking = ({ addData }: Props) => {
     }
   };
 
+  const editTop10Data = async () => {
+    try {
+      const response = await axios.post(
+        'https://babzip.duckdns.org/top10',
+        rankData,
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
+      console.log(response.status === 200);
+    } catch (err) {
+      console.error('[에러 발생] : ', err);
+    }
+  };
+
   useEffect(() => {
     console.log('addData:', addData);
     console.log('rankData:', rankData);
@@ -61,6 +76,10 @@ const MyRanking = ({ addData }: Props) => {
     }
     console.log(rankData);
   }, [addData]);
+
+  useEffect(() => {
+    editTop10Data();
+  }, [rankData]);
 
   useEffect(() => {
     getTop10Data();
@@ -112,8 +131,19 @@ const MyRanking = ({ addData }: Props) => {
             />
             <div className={styles.modal}>
               <DeleteModal
+                onDelete={() => {
+                  setRankData((prev) =>
+                    prev
+                      ? prev.map((item) =>
+                          item.rankValue === selected.rankValue
+                            ? { ...item, restaurantName: null, address: null }
+                            : item
+                        )
+                      : []
+                  );
+                }}
+                onCancel={() => setIsDeleteModalOn(false)}
                 name={selected.restaurantName ?? ''}
-                rank={selected.rankValue}
               />
             </div>
           </>
