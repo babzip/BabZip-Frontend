@@ -10,6 +10,7 @@ type Props = {
   visited: boolean;
   textContent: string;
   rating: number;
+  onAddClicked: () => void;
 };
 
 const VisitedEatery = ({
@@ -19,6 +20,7 @@ const VisitedEatery = ({
   visited,
   textContent,
   rating,
+  onAddClicked,
 }: Props) => {
   const [isFullView, setIsFullView] = useState<boolean>(false);
   const handleShare = () => {
@@ -53,7 +55,13 @@ const VisitedEatery = ({
             : '새로운 맛집'}
         </div>
         <div className={styles.address}>{location}</div>
-        {visited ?? <button className={styles.addBtn}>추가하기</button>}
+        {!visited ? (
+          <button onClick={onAddClicked} className={styles.addBtn}>
+            추가하기
+          </button>
+        ) : (
+          ''
+        )}
         {visited && (
           <>
             <p
@@ -72,10 +80,14 @@ const VisitedEatery = ({
           </>
         )}
       </div>
-      <div className={styles.rating}>
-        <Star size={20} fill='yellow' />
-        <span>{rating}</span>
-      </div>
+      {visited ? (
+        <div className={styles.rating}>
+          <Star size={20} fill='yellow' />
+          <span>{rating}</span>
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 };
