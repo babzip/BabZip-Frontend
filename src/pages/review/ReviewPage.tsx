@@ -1,9 +1,9 @@
 import { Star, StarOff } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 import Rating from 'react-rating';
 import axios from 'axios';
 import styles from './reviewPage.module.css';
-import { useState } from 'react';
 
 type Props = {
   name: string;
@@ -11,6 +11,8 @@ type Props = {
   kakaoPlaceId: string;
   visitedDate: Date;
   closeModal: () => void;
+  initialRating?: number;
+  initialContent?: string;
 };
 
 const ReviewPage = ({
@@ -19,10 +21,17 @@ const ReviewPage = ({
   kakaoPlaceId,
   visitedDate,
   closeModal,
+  initialContent,
+  initialRating,
 }: Props) => {
   const accessToken = localStorage.getItem('accessToken');
   const [value, setValue] = useState<string>('');
   const [rating, setRating] = useState<number>(0);
+
+  useEffect(() => {
+    setValue(initialContent ?? '');
+    setRating(initialRating ?? 0);
+  }, []);
 
   const handleWrite = async () => {
     const body = {
@@ -33,14 +42,26 @@ const ReviewPage = ({
       rating: rating,
     };
     try {
-      const response = await axios.post(
-        'https://babzip.duckdns.org/guestbook',
-        body,
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        }
-      );
-      console.log('[작성 결과] : ', response);
+      if (initialContent && initialContent) {
+        const response = await axios.patch(
+          'https://babzip.duckdns.org/guestbook',
+          body,
+          {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          }
+        );
+        console.log('[수정 결과] : ', response);
+      } else {
+        const response = await axios.post(
+          'https://babzip.duckdns.org/guestbook',
+          body,
+          {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          }
+        );
+        console.log('[작성 결과] : ', response);
+      }
+
       closeModal();
     } catch (err) {
       console.error(err);
@@ -49,9 +70,9 @@ const ReviewPage = ({
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>{name}</h2>
-      <p
-        className={styles.date}
-      >{`${visitedDate.getFullYear()}년 ${visitedDate.getMonth()}월 ${visitedDate.getDate()}일`}</p>
+      <p className={styles.date}>{`${visitedDate.getFullYear()}년 ${
+        visitedDate.getMonth() + 1
+      }월 ${visitedDate.getDate()}일`}</p>
       <p className={styles.address}>경상북도 구미시 인동 중앙로 1길</p>
 
       <div className={styles.starReview}>
@@ -71,7 +92,7 @@ const ReviewPage = ({
       ></textarea>
 
       <button className={styles.editBtn} onClick={() => handleWrite()}>
-        수정
+        완료
       </button>
     </div>
   );
