@@ -42,8 +42,8 @@ const MyRanking = ({ addData }: Props) => {
   };
 
   useEffect(() => {
-    console.log('✅ addData:', addData);
-    console.log('✅ rankData:', rankData);
+    console.log('addData:', addData);
+    console.log('rankData:', rankData);
     if (addData?.rank && addData.name && addData.address) {
       setRankData((prev) =>
         prev

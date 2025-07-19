@@ -19,7 +19,7 @@ const MyHistory = () => {
   const accessToken = localStorage.getItem('accessToken');
 
   const mappingSortQuery = (option: string) => {
-    if (option === 'latest') return 'createdAt';
+    if (option === 'latest') return 'createdAt,DESC';
     if (option === 'rating') return 'rating,DESC';
   };
   const mappginSortOption = (option: string) => {
