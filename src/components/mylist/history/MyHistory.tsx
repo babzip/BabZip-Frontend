@@ -14,7 +14,14 @@ const MyHistory = () => {
   const [isOptionModalOn, setIsOptionModalOn] = useState<boolean>(false);
   const [sortOption, setSortOption] = useState<'latest' | 'rating'>('latest');
   const [selectedPage, setSelectdPage] = useState(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+
   const accessToken = localStorage.getItem('accessToken');
+
+  const mappingSortQuery = (option: string) => {
+    if (option === 'latest') return 'createdAt';
+    if (option === 'rating') return 'rating,DESC';
+  };
   const mappginSortOption = (option: string) => {
     if (option === 'latest') return '최신순';
     if (option === 'rating') return '별점순';
@@ -23,13 +30,16 @@ const MyHistory = () => {
   const getAllDate = async () => {
     try {
       const response = await axios.get(
-        'https://babzip.duckdns.org/guestbook/me',
+        `https://babzip.duckdns.org/guestbook/me?page=${
+          selectedPage - 1
+        }&sort=${mappingSortQuery(sortOption)}`,
         {
           headers: { Authorization: `Bearer ${accessToken}` },
         }
       );
-      console.log('[방명록 데이터 Get] ', response.data.data.content);
+      console.log('[방명록 데이터 Get] ', response.data);
       setAllData(response.data.data.content);
+      setTotalPages(response.data.data.totalPages);
     } catch (err) {
       console.error(err);
     }
@@ -37,7 +47,7 @@ const MyHistory = () => {
 
   useEffect(() => {
     getAllDate();
-  }, []);
+  }, [selectedPage, sortOption]);
 
   return (
     <div className={styles.container}>
@@ -85,49 +95,29 @@ const MyHistory = () => {
         )}
       </div>
       <div className={styles.pageBar}>
-        <ChevronLeft size={25} />
-        <div
-          className={`${styles.pageNumber} ${
-            selectedPage === 1 ? styles.selected : ''
-          }`}
-          onClick={() => setSelectdPage(1)}
-        >
-          1
-        </div>
-        <div
-          className={`${styles.pageNumber} ${
-            selectedPage === 2 ? styles.selected : ''
-          }`}
-          onClick={() => setSelectdPage(2)}
-        >
-          2
-        </div>
-        <div
-          className={`${styles.pageNumber} ${
-            selectedPage === 3 ? styles.selected : ''
-          }`}
-          onClick={() => setSelectdPage(3)}
-        >
-          3
-        </div>
-        <div
-          className={`${styles.pageNumber} ${
-            selectedPage === 4 ? styles.selected : ''
-          }`}
-          onClick={() => setSelectdPage(4)}
-        >
-          4
-        </div>
-        <div
-          className={`${styles.pageNumber} ${
-            selectedPage === 5 ? styles.selected : ''
-          }`}
-          onClick={() => setSelectdPage(5)}
-        >
-          5
-        </div>
+        <ChevronLeft
+          size={25}
+          onClick={() => setSelectdPage((prev) => Math.max(prev - 1, 1))}
+        />
 
-        <ChevronRight size={25} />
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <div
+            key={page}
+            className={`${styles.pageNumber} ${
+              selectedPage === page ? styles.selected : ''
+            }`}
+            onClick={() => setSelectdPage(page)}
+          >
+            {page}
+          </div>
+        ))}
+
+        <ChevronRight
+          size={25}
+          onClick={() =>
+            setSelectdPage((prev) => Math.min(prev + 1, totalPages))
+          }
+        />
       </div>
     </div>
   );
