@@ -29,3 +29,49 @@
   justify-content: center;
   gap: 1rem;
 }
+
+.buttons {
+  width: 80%;
+  height: 20vh;
+  display: flex;
+  flex-direction: row;
+  pointer-events: auto;
+}
+
+.locationOptions {
+  position: absolute;
+  bottom: 2rem;
+  left: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.zoom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #cdd1d5;
+  border-radius: 8px;
+}
+
+.zoom > div {
+  padding: 0.6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.focusBtn {
+  padding: 0.6rem;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #cdd1d5;
+}

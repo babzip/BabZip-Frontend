@@ -9,8 +9,10 @@ type MapStore = {
     lat: number;
     lng: number;
   } | null;
+  mapRef: React.MutableRefObject<kakao.maps.Map | null> | null;
   setCenter: (lat: number, lng: number) => void;
   setMarker: (lat: number | null, lng?: number) => void;
+  setMapRef: (ref: React.MutableRefObject<kakao.maps.Map | null>) => void;
 };
 
 export const useMapStore = create<MapStore>((set) => ({
@@ -19,6 +21,7 @@ export const useMapStore = create<MapStore>((set) => ({
     lng: 126.570667,
   },
   marker: null,
+  mapRef: null,
   setCenter: (lat, lng) =>
     set(() => ({
       center: { lat, lng },
@@ -27,4 +30,5 @@ export const useMapStore = create<MapStore>((set) => ({
     set(() => ({
       marker: lat === null ? null : { lat, lng: lng! },
     })),
+  setMapRef: (ref) => set(() => ({ mapRef: ref })),
 }));

@@ -1,5 +1,5 @@
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { Outlet } from 'react-router-dom';
 import styles from './kakaomap.module.css';
@@ -13,6 +13,9 @@ type Lating = {
 
 function Kakaomap() {
   const { center, marker } = useMapStore();
+  const mapRef = useRef<kakao.maps.Map | null>(null);
+  const isSet = useRef(false);
+  const setMapRef = useMapStore((state) => state.setMapRef);
   const setLocation = useLocationStore((state) => state.setLocation);
 
   const [position, setPosition] = useState<Lating>({
@@ -38,7 +41,18 @@ function Kakaomap() {
 
   return (
     <div className={styles.wrapper}>
-      <Map center={center} level={3} className={styles.map}>
+      <Map
+        center={center}
+        level={3}
+        className={styles.map}
+        onCreate={(map) => {
+          if (!isSet.current) {
+            mapRef.current = map;
+            setMapRef(mapRef);
+            isSet.current = true;
+          }
+        }}
+      >
         <MapMarker
           position={position}
           image={{
