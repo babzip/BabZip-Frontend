@@ -64,7 +64,7 @@ const MyHistory = () => {
       <SearchBar
         value={searchValue}
         placeholder='식당명을 입력해보세요.'
-        onChange={() => setSearchValue}
+        onChange={(e) => setSearchValue(e.currentTarget.value)}
       />
       <div className={styles.barBox}>
         {allData.map((ele) => (
