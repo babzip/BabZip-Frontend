@@ -190,7 +190,11 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
           <ReviewPage
             initialContent={postInfo?.content}
             initialRating={postInfo?.rating}
-            closeModal={() => setIsModifyModalOn(false)}
+            closeModal={() => {
+              setIsModifyModalOn(false);
+              setMarker(null);
+              setCenter(lat, lng);
+            }}
             address={postInfo?.address ?? ''}
             kakaoPlaceId={selectedData.id}
             name={postInfo?.restaurantName ?? ''}
