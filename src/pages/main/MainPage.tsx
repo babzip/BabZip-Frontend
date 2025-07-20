@@ -33,7 +33,6 @@ function MainPage() {
           <div
             className={styles.focusBtn}
             onClick={() => {
-              console.log('클릭됨');
               if (mapRef?.current) {
                 mapRef.current.panTo(new kakao.maps.LatLng(lat, lng));
               }
@@ -42,10 +41,25 @@ function MainPage() {
             <Focus />
           </div>
           <div className={styles.zoom}>
-            <div>
+            <div
+              onClick={() => {
+                if (mapRef?.current) {
+                  const currentLevel = mapRef.current.getLevel();
+                  mapRef.current.setLevel(currentLevel - 1); // Zoom in (작은 숫자일수록 더 가까움)
+                }
+              }}
+            >
               <Plus />
             </div>
-            <div>
+            <div
+              onClick={() => {
+                console.log('클릭됨');
+                if (mapRef?.current) {
+                  const currentLevel = mapRef.current.getLevel();
+                  mapRef.current.setLevel(currentLevel + 1); // Zoom out (큰 숫자일수록 더 멀어짐)
+                }
+              }}
+            >
               <Minus />
             </div>
           </div>
