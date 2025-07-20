@@ -113,6 +113,21 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
     setIsModalOn(true);
   };
 
+  const deleteData = async (ele: searchResultType) => {
+    const kakaoPlaceId = ele.id;
+    try {
+      const response = await axios.delete(
+        `https://babzip.duckdns.org/guestbook/${kakaoPlaceId}`,
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
+      console.log(response.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.searchBar}>
@@ -127,13 +142,18 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
       </div>
       <div className={styles.searchResult}>
         {resultOn &&
-          searchResult.map((ele) => (
-            <div
-              className={styles.element}
-              onClick={() => handleSelectData(ele)}
-            >
-              {ele.place_name}
-            </div>
+          (searchResult.length > 0 ? (
+            searchResult.map((ele) => (
+              <div
+                key={ele.id}
+                className={styles.element}
+                onClick={() => handleSelectData(ele)}
+              >
+                {ele.place_name}
+              </div>
+            ))
+          ) : (
+            <div className={styles.element}>검색 결과가 없습니다.</div>
           ))}
       </div>
       <div className={styles.modal}>
@@ -157,6 +177,10 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
                   setIsModalOn(false);
                   setIsWriteModalOn(true);
                 }}
+                onDeleteClicked={() => {
+                  deleteData(selectedData);
+                  setIsModalOn(false);
+                }}
                 location={selectedData.address_name}
                 visited={visited}
                 restaurentName={selectedData.place_name}
@@ -169,20 +193,30 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
         )}
       </div>
       <div className={styles.writeModal}>
-        {isWriteModalOn ? (
-          <ReviewPage
-            closeModal={() => {
-              setIsWriteModalOn(false);
-              setMarker(null);
-              setCenter(lat, lng);
-            }}
-            address={selectedData.address_name}
-            kakaoPlaceId={selectedData.id}
-            name={selectedData.place_name}
-            visitedDate={new Date()}
-          />
-        ) : (
-          ''
+        {isWriteModalOn && (
+          <>
+            <div
+              className={styles.modalOverlay}
+              onClick={() => {
+                setIsWriteModalOn(false);
+                setMarker(null);
+                setCenter(lat, lng);
+              }}
+            />
+            <div className={styles.writeModal}>
+              <ReviewPage
+                closeModal={() => {
+                  setIsWriteModalOn(false);
+                  setMarker(null);
+                  setCenter(lat, lng);
+                }}
+                address={selectedData.address_name}
+                kakaoPlaceId={selectedData.id}
+                name={selectedData.place_name}
+                visitedDate={new Date()}
+              />
+            </div>
+          </>
         )}
       </div>
       <div className={styles.modifyModal}>

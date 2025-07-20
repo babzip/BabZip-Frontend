@@ -12,6 +12,7 @@ type Props = {
   rating: number;
   onAddClicked: () => void;
   onModifyClicked: () => void;
+  onDeleteClicked: () => void;
 };
 
 const VisitedEatery = ({
@@ -23,6 +24,7 @@ const VisitedEatery = ({
   rating,
   onAddClicked,
   onModifyClicked,
+  onDeleteClicked,
 }: Props) => {
   const [isFullView, setIsFullView] = useState<boolean>(false);
   const handleShare = () => {
@@ -72,14 +74,25 @@ const VisitedEatery = ({
             >
               {textContent}
             </p>
-            <button
-              className={`${styles.modifyBtn} ${
-                isFullView ? styles.fullViewBtn : styles.unFullViewBtn
-              }`}
-              onClick={onModifyClicked}
-            >
-              수정하기
-            </button>
+            {isFullView ? (
+              <div className={styles.btnBox}>
+                <button className={styles.deleteBtn} onClick={onDeleteClicked}>
+                  삭제하기
+                </button>
+                <button className={styles.modBtn} onClick={onModifyClicked}>
+                  수정하기
+                </button>
+              </div>
+            ) : (
+              <button
+                className={`${styles.modifyBtn} ${
+                  isFullView ? styles.fullViewBtn : styles.unFullViewBtn
+                }`}
+                onClick={onModifyClicked}
+              >
+                수정하기
+              </button>
+            )}
           </>
         )}
       </div>

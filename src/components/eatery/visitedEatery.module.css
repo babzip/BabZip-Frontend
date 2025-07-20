@@ -109,3 +109,27 @@
   right: 2rem;
   top: 3rem;
 }
+
+.btnBox {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.btnBox > .deleteBtn {
+  width: 40%;
+  height: 2.5rem;
+  border: none;
+  border-radius: 8px;
+}
+
+.btnBox > .modBtn {
+  width: 40%;
+  height: 2.5rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #7d7aff;
+  color: white;
+}

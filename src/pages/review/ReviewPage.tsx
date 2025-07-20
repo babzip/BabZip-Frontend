@@ -72,16 +72,19 @@ const ReviewPage = ({
       <p className={styles.date}>{`${visitedDate.getFullYear()}년 ${
         visitedDate.getMonth() + 1
       }월 ${visitedDate.getDate()}일`}</p>
-      <p className={styles.address}>경상북도 구미시 인동 중앙로 1길</p>
+      <p className={styles.address}>{address}</p>
 
       <div className={styles.starReview}>
         <Rating
-          onClick={(rate) => setRating(rate / 20)}
+          onClick={(rate) => {
+            setRating(rate);
+          }}
           initialValue={rating * 20}
           allowFraction={true}
           size={24}
           fillColor='#FFD700'
           emptyColor='#ccc'
+          transition
         />
       </div>
       <textarea
