@@ -169,20 +169,30 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
         )}
       </div>
       <div className={styles.writeModal}>
-        {isWriteModalOn ? (
-          <ReviewPage
-            closeModal={() => {
-              setIsWriteModalOn(false);
-              setMarker(null);
-              setCenter(lat, lng);
-            }}
-            address={selectedData.address_name}
-            kakaoPlaceId={selectedData.id}
-            name={selectedData.place_name}
-            visitedDate={new Date()}
-          />
-        ) : (
-          ''
+        {isWriteModalOn && (
+          <>
+            <div
+              className={styles.modalOverlay}
+              onClick={() => {
+                setIsWriteModalOn(false);
+                setMarker(null);
+                setCenter(lat, lng);
+              }}
+            />
+            <div className={styles.writeModal}>
+              <ReviewPage
+                closeModal={() => {
+                  setIsWriteModalOn(false);
+                  setMarker(null);
+                  setCenter(lat, lng);
+                }}
+                address={selectedData.address_name}
+                kakaoPlaceId={selectedData.id}
+                name={selectedData.place_name}
+                visitedDate={new Date()}
+              />
+            </div>
+          </>
         )}
       </div>
       <div className={styles.modifyModal}>
