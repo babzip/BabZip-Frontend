@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { Rating } from 'react-simple-star-rating';
 import axios from 'axios';
-import styles from './reviewPage.module.css';
+import styles from './reviewpage.module.css';
 
 type Props = {
   name: string;
