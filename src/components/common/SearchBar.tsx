@@ -141,7 +141,11 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
           <>
             <div
               className={styles.modalOverlay}
-              onClick={() => setIsModalOn(false)}
+              onClick={() => {
+                setIsModalOn(false);
+                setMarker(null);
+                setCenter(lat, lng);
+              }}
             />
             <div className={styles.modal}>
               <VisitedEatery
