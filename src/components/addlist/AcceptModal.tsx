@@ -1,15 +1,17 @@
 import styles from './acceptModel.module.css';
 import { useNavigate } from 'react-router-dom';
+import { useTop10Store } from '../../store/useTop10Store';
 
 type Props = {
   name: string;
   address: string;
   rank: number;
+  onCancel: () => void;
 };
 
-const AcceptModal = ({ name, address, rank }: Props) => {
+const AcceptModal = ({ name, address, rank, onCancel }: Props) => {
   const navigate = useNavigate();
-  const page = 'ranking';
+  const { updateRank } = useTop10Store();
   return (
     <div className={styles.container}>
       <img src='/add_icon.svg' alt='' />
@@ -18,14 +20,17 @@ const AcceptModal = ({ name, address, rank }: Props) => {
       <div className={styles.btnBox}>
         <button
           className={styles.addBtn}
-          onClick={() =>
-            navigate('/mylist', { state: { name, address, rank, page } })
-          }
+          onClick={() => {
+            updateRank(rank, name, address);
+            navigate('/mylist');
+          }}
         >
           추가
         </button>
 
-        <button className={styles.cancelBtn}>취소</button>
+        <button className={styles.cancelBtn} onClick={onCancel}>
+          취소
+        </button>
       </div>
     </div>
   );

@@ -1,22 +1,99 @@
-import { memo } from "react";
-import styles from "./reviewPage.module.css";
+import { useEffect, useState } from 'react';
 
-const ReviewPage = () => {
+import { Rating } from 'react-simple-star-rating';
+import axios from 'axios';
+import styles from './reviewpage.module.css';
+
+type Props = {
+  name: string;
+  address: string;
+  kakaoPlaceId: string;
+  visitedDate: Date;
+  closeModal: () => void;
+  initialRating?: number;
+  initialContent?: string;
+};
+
+const ReviewPage = ({
+  name,
+  address,
+  kakaoPlaceId,
+  visitedDate,
+  closeModal,
+  initialContent,
+  initialRating,
+}: Props) => {
+  const accessToken = localStorage.getItem('accessToken');
+  const [value, setValue] = useState<string>('');
+  const [rating, setRating] = useState<number>(0);
+
+  useEffect(() => {
+    setValue(initialContent ?? '');
+    setRating(initialRating ?? 0);
+  }, []);
+
+  const handleWrite = async () => {
+    const body = {
+      restaurantName: name,
+      address: address,
+      kakaoPlaceId: kakaoPlaceId,
+      content: value,
+      rating: rating,
+    };
+    try {
+      if (initialContent && initialContent) {
+        const response = await axios.patch(
+          'https://babzip.duckdns.org/guestbook',
+          body,
+          {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          }
+        );
+        console.log('[수정 결과] : ', response);
+      } else {
+        const response = await axios.post(
+          'https://babzip.duckdns.org/guestbook',
+          body,
+          {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          }
+        );
+        console.log('[작성 결과] : ', response);
+      }
+
+      closeModal();
+    } catch (err) {
+      console.error(err);
+    }
+  };
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>식당명</h2>
-      <p className={styles.date}>2025년 0월 0일 방문</p>
+      <h2 className={styles.title}>{name}</h2>
+      <p className={styles.date}>{`${visitedDate.getFullYear()}년 ${
+        visitedDate.getMonth() + 1
+      }월 ${visitedDate.getDate()}일`}</p>
       <p className={styles.address}>경상북도 구미시 인동 중앙로 1길</p>
 
-      <div className={styles.images}>
-        <img src="/food1.jpg" alt="음식1" className={styles.image} />
-        <img src="/food2.jpg" alt="음식2" className={styles.image} />
-        <img src="/food2.jpg" alt="음식3" className={styles.image} />
+      <div className={styles.starReview}>
+        <Rating
+          onClick={(rate) => setRating(rate / 20)}
+          initialValue={rating * 20}
+          allowFraction={true}
+          size={24}
+          fillColor='#FFD700'
+          emptyColor='#ccc'
+        />
       </div>
+      <textarea
+        placeholder='메세지를 입력하세요.'
+        className={styles.memo}
+        value={value}
+        onChange={(e) => setValue(e.currentTarget.value)}
+      ></textarea>
 
-      <textarea className={styles.memo}>메모가 된 메세지</textarea>
-
-      <button className={styles.editBtn}>수정</button>
+      <button className={styles.editBtn} onClick={() => handleWrite()}>
+        완료
+      </button>
     </div>
   );
 };

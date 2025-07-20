@@ -10,6 +10,8 @@ type Props = {
   visited: boolean;
   textContent: string;
   rating: number;
+  onAddClicked: () => void;
+  onModifyClicked: () => void;
 };
 
 const VisitedEatery = ({
@@ -19,6 +21,8 @@ const VisitedEatery = ({
   visited,
   textContent,
   rating,
+  onAddClicked,
+  onModifyClicked,
 }: Props) => {
   const [isFullView, setIsFullView] = useState<boolean>(false);
   const handleShare = () => {
@@ -36,7 +40,7 @@ const VisitedEatery = ({
   return (
     <div
       className={`${styles.container} ${
-        isFullView ? styles.fullView : styles.unFullView
+        isFullView && visited ? styles.fullView : styles.unFullView
       }`}
     >
       <div className={styles.shareIcon} onClick={() => handleShare()}>
@@ -53,7 +57,13 @@ const VisitedEatery = ({
             : '새로운 맛집'}
         </div>
         <div className={styles.address}>{location}</div>
-        {visited ?? <button className={styles.addBtn}>추가하기</button>}
+        {!visited ? (
+          <button onClick={onAddClicked} className={styles.addBtn}>
+            추가하기
+          </button>
+        ) : (
+          ''
+        )}
         {visited && (
           <>
             <p
@@ -66,16 +76,21 @@ const VisitedEatery = ({
               className={`${styles.modifyBtn} ${
                 isFullView ? styles.fullViewBtn : styles.unFullViewBtn
               }`}
+              onClick={onModifyClicked}
             >
-              {!isFullView ? '추가하기' : '수정하기'}
+              수정하기
             </button>
           </>
         )}
       </div>
-      <div className={styles.rating}>
-        <Star size={20} fill='yellow' />
-        <span>{rating}</span>
-      </div>
+      {visited ? (
+        <div className={styles.rating}>
+          <Star size={20} fill='yellow' />
+          <span>{rating}</span>
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 };

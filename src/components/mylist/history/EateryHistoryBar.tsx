@@ -3,9 +3,11 @@ import styles from './eateryHistoryBar.module.css';
 
 export interface EateryHistoryBarType {
   rating: number;
-  name: string;
+  restaurantName: string;
+  kakaoPlaceId: string;
+  content: string;
   address: string;
-  visitiedAt: Date;
+  createdAt: Date;
 }
 
 interface Props extends EateryHistoryBarType {
@@ -14,11 +16,12 @@ interface Props extends EateryHistoryBarType {
 
 const EateryHistoryBar = ({
   rating,
-  name,
+  restaurantName,
   address,
-  visitiedAt,
+  createdAt,
   onClick,
 }: Props) => {
+  const date = new Date(createdAt);
   return (
     <div className={styles.container} onClick={onClick}>
       <div className={styles.ratingBox}>
@@ -26,11 +29,11 @@ const EateryHistoryBar = ({
         <div className={styles.score}>{rating.toPrecision(2)}</div>
       </div>
       <div className={styles.columnBox}>
-        <div className={styles.eateryName}>{name}</div>
+        <div className={styles.eateryName}>{restaurantName}</div>
         <div className={styles.etcInfo}>{address}</div>
-        <div className={styles.etcInfo}>{`${visitiedAt.getFullYear()}년 ${
-          visitiedAt.getMonth() + 1
-        }월 ${visitiedAt.getDate()}일`}</div>
+        <div className={styles.etcInfo}>{`${date.getFullYear()}년 ${
+          date.getMonth() + 1
+        }월 ${date.getDate()}일`}</div>
       </div>
     </div>
   );

@@ -1,14 +1,12 @@
 import styles from './deleteModal.module.css';
-import { useNavigate } from 'react-router-dom';
 
 type Props = {
   name: string;
-  rank: number;
+  onCancel: () => void;
+  onDelete: () => void;
 };
 
-const DeleteModal = ({ name, rank }: Props) => {
-  const navigate = useNavigate();
-  const page = 'ranking';
+const DeleteModal = ({ name, onCancel, onDelete }: Props) => {
   return (
     <div className={styles.container}>
       <img src='/delete_icon.svg' alt='' />
@@ -17,16 +15,17 @@ const DeleteModal = ({ name, rank }: Props) => {
       <div className={styles.btnBox}>
         <button
           className={styles.addBtn}
-          onClick={() =>
-            navigate('/mylist', {
-              state: { name: null, address: null, rank, page },
-            })
-          }
+          onClick={() => {
+            onDelete();
+            onCancel();
+          }}
         >
           삭제
         </button>
 
-        <button className={styles.cancelBtn}>취소</button>
+        <button className={styles.cancelBtn} onClick={onCancel}>
+          취소
+        </button>
       </div>
     </div>
   );
