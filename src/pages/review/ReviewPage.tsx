@@ -76,12 +76,15 @@ const ReviewPage = ({
 
       <div className={styles.starReview}>
         <Rating
-          onClick={(rate) => setRating(rate / 20)}
+          onClick={(rate) => {
+            setRating(rate);
+          }}
           initialValue={rating * 20}
           allowFraction={true}
           size={24}
           fillColor='#FFD700'
           emptyColor='#ccc'
+          transition
         />
       </div>
       <textarea
