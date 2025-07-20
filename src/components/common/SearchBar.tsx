@@ -137,25 +137,31 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
           ))}
       </div>
       <div className={styles.modal}>
-        {isModalOn ? (
-          <VisitedEatery
-            onModifyClicked={() => {
-              setIsModalOn(false);
-              setIsModifyModalOn(true);
-            }}
-            onAddClicked={() => {
-              setIsModalOn(false);
-              setIsWriteModalOn(true);
-            }}
-            location={selectedData.address_name}
-            visited={visited}
-            restaurentName={selectedData.place_name}
-            rating={postInfo?.rating ?? 0}
-            visitedDate={new Date('2024-11-19')}
-            textContent={postInfo?.content ?? ''}
-          />
-        ) : (
-          ''
+        {isModalOn && (
+          <>
+            <div
+              className={styles.modalOverlay}
+              onClick={() => setIsModalOn(false)}
+            />
+            <div className={styles.modal}>
+              <VisitedEatery
+                onModifyClicked={() => {
+                  setIsModalOn(false);
+                  setIsModifyModalOn(true);
+                }}
+                onAddClicked={() => {
+                  setIsModalOn(false);
+                  setIsWriteModalOn(true);
+                }}
+                location={selectedData.address_name}
+                visited={visited}
+                restaurentName={selectedData.place_name}
+                rating={postInfo?.rating ?? 0}
+                visitedDate={new Date('2024-11-19')}
+                textContent={postInfo?.content ?? ''}
+              />
+            </div>
+          </>
         )}
       </div>
       <div className={styles.writeModal}>
