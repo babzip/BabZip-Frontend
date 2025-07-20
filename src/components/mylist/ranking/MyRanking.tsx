@@ -14,6 +14,7 @@ const MyRanking = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isDeleteModalOn, setIsDeleteModalOn] = useState(false);
   const [selectedRank, setSelectedRank] = useState(0);
+  const [isInitialized, setIsInitialized] = useState(false);
   const [originalRankData, setOriginalRankData] = useState<RankingDataType[]>(
     []
   );
@@ -57,7 +58,9 @@ const MyRanking = () => {
   }, [rankData]);
 
   useEffect(() => {
-    getTop10Data();
+    getTop10Data().then(() => {
+      setIsInitialized(true);
+    });
   }, []);
 
   return (
