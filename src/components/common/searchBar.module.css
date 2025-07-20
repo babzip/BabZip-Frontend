@@ -5,6 +5,7 @@
   justify-content: start;
   align-items: center;
   pointer-events: auto;
+  z-index: 1002;
 }
 
 .content {
@@ -72,7 +73,7 @@
 
 .modal {
   width: 100%;
-  z-index: 1000;
+  z-index: 1004;
   position: absolute;
   bottom: 0;
 }
@@ -87,6 +88,6 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.3);
-  z-index: 999;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 1003;
 }
