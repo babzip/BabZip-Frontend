@@ -161,7 +161,11 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
       <div className={styles.writeModal}>
         {isWriteModalOn ? (
           <ReviewPage
-            closeModal={() => setIsWriteModalOn(false)}
+            closeModal={() => {
+              setIsWriteModalOn(false);
+              setMarker(null);
+              setCenter(lat, lng);
+            }}
             address={selectedData.address_name}
             kakaoPlaceId={selectedData.id}
             name={selectedData.place_name}

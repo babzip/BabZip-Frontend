@@ -10,7 +10,7 @@ type MapStore = {
     lng: number;
   } | null;
   setCenter: (lat: number, lng: number) => void;
-  setMarker: (lat: number, lng: number) => void;
+  setMarker: (lat: number | null, lng?: number) => void;
 };
 
 export const useMapStore = create<MapStore>((set) => ({
@@ -25,6 +25,6 @@ export const useMapStore = create<MapStore>((set) => ({
     })),
   setMarker: (lat, lng) =>
     set(() => ({
-      marker: { lat, lng },
+      marker: lat === null ? null : { lat, lng: lng! },
     })),
 }));
