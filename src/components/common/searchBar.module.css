@@ -109,3 +109,7 @@
   z-index: 20;
   z-index: 1005;
 }
+
+.modifyModal {
+  z-index: 1005;
+}
