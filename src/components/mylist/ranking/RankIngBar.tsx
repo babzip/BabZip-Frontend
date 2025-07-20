@@ -1,4 +1,4 @@
-import type { RankingDataType } from './MyRanking';
+import type { RankingDataType } from '../../../store/useTop10Store';
 import styles from './rankingBar.module.css';
 import { useNavigate } from 'react-router-dom';
 

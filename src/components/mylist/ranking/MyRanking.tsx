@@ -20,7 +20,7 @@ const MyRanking = () => {
   );
   const accessToken = localStorage.getItem('accessToken');
 
-  const { setRankData, updateRank, clearRank } = useTop10Store();
+  const { setRankData, clearRank } = useTop10Store();
   const rankData = useTop10Store((state) => state.rankData);
 
   const getTop10Data = async () => {
@@ -35,11 +35,12 @@ const MyRanking = () => {
     }
   };
 
-  const editTop10Data = async (data) => {
+  const editTop10Data = async (data: RankingDataType[]) => {
     try {
       const res = await axios.post('https://babzip.duckdns.org/top10', data, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
+      console.log(res);
       console.log('[top10 저장 완료]');
     } catch (err) {
       console.error('[top10 저장 에러] :', err);
@@ -59,6 +60,7 @@ const MyRanking = () => {
 
   useEffect(() => {
     getTop10Data().then(() => {
+      console.log(isInitialized);
       setIsInitialized(true);
     });
   }, []);
