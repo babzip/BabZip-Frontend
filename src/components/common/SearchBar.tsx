@@ -5,6 +5,7 @@ import styles from './searchBar.module.css';
 import { useLocationStore } from '../../store/useLocationStore';
 import VisitedEatery from '../eatery/VisitedEatery';
 import ReviewPage from '../../pages/review/ReviewPage';
+import { useMapStore } from '../../store/useMapStore';
 
 type Props = {
   placeholder: string;
@@ -41,6 +42,7 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
   const [selectedData, setSelectedData] =
     useState<searchResultType>(initialSelectedData);
   const [visited, setVisited] = useState<boolean>(false);
+  const { setCenter, setMarker } = useMapStore();
   const { lat, lng } = useLocationStore();
   const [isModalOn, setIsModalOn] = useState<boolean>(false);
   const [resultOn, setResultOn] = useState<boolean>(false);
@@ -105,6 +107,8 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
     setSelectedData(ele);
     const isVisited = await searchVisited(ele.place_name);
     setVisited(isVisited ?? false);
+    setCenter(+ele.y, +ele.x);
+    setMarker(+ele.y, +ele.x);
     setResultOn(false);
     setIsModalOn(true);
   };

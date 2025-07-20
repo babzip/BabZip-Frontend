@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import styles from './kakaomap.module.css';
 import { useLocationStore } from '../../store/useLocationStore';
+import { useMapStore } from '../../store/useMapStore';
 
 type Lating = {
   lat: number;
@@ -11,11 +12,8 @@ type Lating = {
 };
 
 function Kakaomap() {
+  const { center, marker } = useMapStore();
   const setLocation = useLocationStore((state) => state.setLocation);
-  const [center, setCenter] = useState<Lating>({
-    lat: 33.450701,
-    lng: 126.570667,
-  });
 
   const [position, setPosition] = useState<Lating>({
     lat: 33.450701,
@@ -26,14 +24,13 @@ function Kakaomap() {
     navigator.geolocation.getCurrentPosition((pos) => {
       const { latitude, longitude } = pos.coords;
       setLocation(latitude, longitude);
-      setCenter({ lat: latitude, lng: longitude });
+      useMapStore.getState().setCenter(latitude, longitude);
     });
 
     const watcher = navigator.geolocation.watchPosition((pos) => {
       const { latitude, longitude } = pos.coords;
       setLocation(latitude, longitude);
       setPosition({ lat: latitude, lng: longitude });
-      setCenter({ lat: latitude, lng: longitude });
     });
 
     return () => navigator.geolocation.clearWatch(watcher);
@@ -44,11 +41,20 @@ function Kakaomap() {
       <Map center={center} level={3} className={styles.map}>
         <MapMarker
           position={position}
-          image={{
-            src: '/my_location.svg',
-            size: { width: 40, height: 40 },
-          }}
+          // image={{
+          //   src: '/my_location.svg',
+          //   size: { width: 40, height: 40 },
+          // }}
         />
+        {marker && (
+          <MapMarker
+            position={marker}
+            image={{
+              src: '/my_location.svg',
+              size: { width: 30, height: 30 },
+            }}
+          />
+        )}
       </Map>
 
       <div className={styles.content}>
