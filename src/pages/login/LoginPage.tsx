@@ -3,17 +3,15 @@ import styles from './loginpage.module.css';
 function LoginPage() {
   const handleKakaoLogin = () => {
     const redirectUri = `${window.location.origin}/auth/success`;
-    const kakaoLoginUrl = `https://babzip.duckdns.org/oauth2/authorization/kakao?redirect-uri=${encodeURIComponent(
-      redirectUri
-    )}`;
+    const encoded = encodeURIComponent(redirectUri);
+    const kakaoLoginUrl = `https://babzip.duckdns.org/oauth2/authorization/kakao?redirect_uri=${encoded}`;
     window.location.href = kakaoLoginUrl;
   };
 
   const handleGoogleLogin = () => {
     const redirectUri = `${window.location.origin}/auth/success`;
-    const googleLoginUrl = `https://babzip.duckdns.org/oauth2/authorization/google?redirect-uri=${encodeURIComponent(
-      redirectUri
-    )}`;
+    const encoded = encodeURIComponent(redirectUri);
+    const googleLoginUrl = `https://babzip.duckdns.org/oauth2/authorization/google?redirect_uri=${encoded}`;
     window.location.href = googleLoginUrl;
   };
 
