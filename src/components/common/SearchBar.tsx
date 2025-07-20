@@ -127,13 +127,18 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
       </div>
       <div className={styles.searchResult}>
         {resultOn &&
-          searchResult.map((ele) => (
-            <div
-              className={styles.element}
-              onClick={() => handleSelectData(ele)}
-            >
-              {ele.place_name}
-            </div>
+          (searchResult.length > 0 ? (
+            searchResult.map((ele) => (
+              <div
+                key={ele.id}
+                className={styles.element}
+                onClick={() => handleSelectData(ele)}
+              >
+                {ele.place_name}
+              </div>
+            ))
+          ) : (
+            <div className={styles.element}>검색 결과가 없습니다.</div>
           ))}
       </div>
       <div className={styles.modal}>
