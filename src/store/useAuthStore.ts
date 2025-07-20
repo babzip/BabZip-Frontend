@@ -1,8 +1,8 @@
 import type { AuthStore } from './AuthStore';
-import { createStore } from 'zustand';
+import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-export const useAuthStore = createStore(
+export const useAuthStore = create(
   persist<AuthStore>(
     (set) => ({
       isLoggedIn: false,
