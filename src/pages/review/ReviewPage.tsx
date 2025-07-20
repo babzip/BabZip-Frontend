@@ -72,7 +72,7 @@ const ReviewPage = ({
       <p className={styles.date}>{`${visitedDate.getFullYear()}년 ${
         visitedDate.getMonth() + 1
       }월 ${visitedDate.getDate()}일`}</p>
-      <p className={styles.address}>경상북도 구미시 인동 중앙로 1길</p>
+      <p className={styles.address}>{address}</p>
 
       <div className={styles.starReview}>
         <Rating

@@ -113,6 +113,21 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
     setIsModalOn(true);
   };
 
+  const deleteData = async (ele: searchResultType) => {
+    const kakaoPlaceId = ele.id;
+    try {
+      const response = await axios.delete(
+        `https://babzip.duckdns.org/guestbook/${kakaoPlaceId}`,
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
+      console.log(response.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.searchBar}>
@@ -161,6 +176,10 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
                 onAddClicked={() => {
                   setIsModalOn(false);
                   setIsWriteModalOn(true);
+                }}
+                onDeleteClicked={() => {
+                  deleteData(selectedData);
+                  setIsModalOn(false);
                 }}
                 location={selectedData.address_name}
                 visited={visited}
