@@ -1,7 +1,6 @@
-import { Star, StarOff } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-import Rating from 'react-rating';
+import { Rating } from 'react-simple-star-rating';
 import axios from 'axios';
 import styles from './reviewPage.module.css';
 
@@ -77,11 +76,12 @@ const ReviewPage = ({
 
       <div className={styles.starReview}>
         <Rating
-          initialRating={rating}
-          onChange={(rate) => setRating(rate)}
-          emptySymbol={<StarOff color='#ccc' fill='#ccc' size={24} />}
-          fullSymbol={<Star color='#FFD700' fill='#FFD700' size={24} />}
-          fractions={2}
+          onClick={(rate) => setRating(rate / 20)}
+          initialValue={rating * 20}
+          allowFraction={true}
+          size={24}
+          fillColor='#FFD700'
+          emptyColor='#ccc'
         />
       </div>
       <textarea
