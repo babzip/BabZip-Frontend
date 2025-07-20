@@ -41,16 +41,16 @@ function Kakaomap() {
       <Map center={center} level={3} className={styles.map}>
         <MapMarker
           position={position}
-          // image={{
-          //   src: '/my_location.svg',
-          //   size: { width: 40, height: 40 },
-          // }}
+          image={{
+            src: '/my_location.svg',
+            size: { width: 40, height: 40 },
+          }}
         />
         {marker && (
           <MapMarker
             position={marker}
             image={{
-              src: '/my_location.svg',
+              src: '/location.marker.svg',
               size: { width: 30, height: 30 },
             }}
           />
