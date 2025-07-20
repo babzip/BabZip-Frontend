@@ -52,13 +52,6 @@ const MyRanking = () => {
   };
 
   useEffect(() => {
-    if (hasChanged(rankData, originalRankData)) {
-      editTop10Data(rankData);
-      setOriginalRankData(rankData);
-    }
-  }, [rankData]);
-
-  useEffect(() => {
     getTop10Data().then(() => {
       console.log(isInitialized);
       setIsInitialized(true);
