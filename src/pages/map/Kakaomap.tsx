@@ -59,7 +59,7 @@ function Kakaomap() {
             key={marker.id}
             position={{ lat: marker.lat, lng: marker.lng }}
             image={{
-              src: '/location.marker.svg',
+              src: '/location_marker.svg',
               size: { width: 30, height: 30 },
             }}
           />
@@ -76,7 +76,7 @@ function Kakaomap() {
           <MapMarker
             position={marker}
             image={{
-              src: '/location.marker.svg',
+              src: '/location_marker.svg',
               size: { width: 30, height: 30 },
             }}
           />
