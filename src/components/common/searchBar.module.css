@@ -113,3 +113,9 @@
 .modifyModal {
   z-index: 1005;
 }
+
+.subAddress {
+  font-size: 0.8em;
+  color: #cdd1d5;
+  margin-left: 0.4rem;
+}

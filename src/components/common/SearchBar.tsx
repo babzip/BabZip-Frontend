@@ -150,6 +150,7 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
                 onClick={() => handleSelectData(ele)}
               >
                 {ele.place_name}
+                <span className={styles.subAddress}>{ele.address_name}</span>
               </div>
             ))
           ) : (
