@@ -116,7 +116,9 @@ const VisitedEatery = ({
             buttonName='삭제'
             content='맛집 기록을 삭제하시겠습니까?'
             onOk={() => onDeleteClicked()}
-            onCancel={() => setIsCheckModalOn(false)}
+            onCancel={() => {
+              setIsCheckModalOn(false);
+            }}
           />
         </div>
       ) : (

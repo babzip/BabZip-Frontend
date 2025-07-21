@@ -110,7 +110,10 @@ const ReviewPage = ({
               buttonName='확인'
               content='변경사항을 등록하시겠습니까 ?'
               url='cancel_modal_icon.svg'
-              onCancel={() => setIsCheckModalOn(false)}
+              onCancel={() => {
+                setIsCheckModalOn(false);
+                closeModal();
+              }}
               onOk={() => handleWrite()}
             />
           </div>
