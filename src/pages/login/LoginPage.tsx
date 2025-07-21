@@ -17,8 +17,11 @@ function LoginPage() {
 
   return (
     <div className={styles.container}>
-      <img src='/logo.svg' alt='logo' />
-      <div className={styles.subtitle}>로그인하고 맛집을 기록해보세요!</div>
+      <div className={styles.loginPhoto}>
+        <img src='/logo.svg' alt='logo' />
+        <div className={styles.subtitle}>로그인하고 맛집을 기록해보세요!</div>
+      </div>
+
       <div className={styles.btnWrapper}>
         <img
           src='/kakao_login_btn.svg'

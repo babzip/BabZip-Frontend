@@ -1,4 +1,5 @@
 .container {
+  margin-top: 7rem;
   display: flex;
   height: 100vh;
   flex-direction: column;
@@ -8,7 +9,6 @@
 }
 
 .subtitle {
-  padding-bottom: 6rem;
   font-weight: bold;
 }
 
@@ -18,4 +18,10 @@
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
+}
+
+.loginPhoto {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
