@@ -1,5 +1,6 @@
 import { Share, Star } from 'lucide-react';
 
+import Modal from '../modal/Modal';
 import styles from './visitedEatery.module.css';
 import { useState } from 'react';
 
@@ -27,6 +28,7 @@ const VisitedEatery = ({
   onDeleteClicked,
 }: Props) => {
   const [isFullView, setIsFullView] = useState<boolean>(false);
+  const [isCheckModalOn, setIsCheckModalOn] = useState<boolean>(false);
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
@@ -76,7 +78,10 @@ const VisitedEatery = ({
             </p>
             {isFullView ? (
               <div className={styles.btnBox}>
-                <button className={styles.deleteBtn} onClick={onDeleteClicked}>
+                <button
+                  className={styles.deleteBtn}
+                  onClick={() => setIsCheckModalOn(true)}
+                >
                   삭제하기
                 </button>
                 <button className={styles.modBtn} onClick={onModifyClicked}>
@@ -100,6 +105,19 @@ const VisitedEatery = ({
         <div className={styles.rating}>
           <Star size={20} fill='yellow' />
           <span>{rating}</span>
+        </div>
+      ) : (
+        ''
+      )}
+      {isCheckModalOn ? (
+        <div className={styles.overlay}>
+          <Modal
+            url='/delete_modal_icon.svg'
+            buttonName='삭제'
+            content='맛집 기록을 삭제하시겠습니까?'
+            onOk={() => onDeleteClicked()}
+            onCancel={() => setIsCheckModalOn(false)}
+          />
         </div>
       ) : (
         ''

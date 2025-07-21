@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import Modal from '../../components/modal/Modal';
 import { Rating } from 'react-simple-star-rating';
 import axios from 'axios';
 import styles from './reviewpage.module.css';
@@ -26,6 +27,7 @@ const ReviewPage = ({
   const accessToken = localStorage.getItem('accessToken');
   const [value, setValue] = useState<string>('');
   const [rating, setRating] = useState<number>(0);
+  const [isCheckModalOn, setIsCheckModalOn] = useState<boolean>(false);
 
   useEffect(() => {
     setValue(initialContent ?? '');
@@ -94,9 +96,26 @@ const ReviewPage = ({
         onChange={(e) => setValue(e.currentTarget.value)}
       ></textarea>
 
-      <button className={styles.editBtn} onClick={() => handleWrite()}>
+      <button
+        className={styles.editBtn}
+        onClick={() => setIsCheckModalOn(true)}
+      >
         완료
       </button>
+
+      <div className={styles.modal}>
+        {isCheckModalOn && (
+          <div className={styles.overlay}>
+            <Modal
+              buttonName='확인'
+              content='변경사항을 등록하시겠습니까 ?'
+              url='cancel_modal_icon.svg'
+              onCancel={() => setIsCheckModalOn(false)}
+              onOk={() => handleWrite()}
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
