@@ -186,7 +186,7 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
                 visited={visited}
                 restaurentName={selectedData.place_name}
                 rating={postInfo?.rating ?? 0}
-                visitedDate={new Date('2024-11-19')}
+                visitedDate={new Date()}
                 textContent={postInfo?.content ?? ''}
               />
             </div>

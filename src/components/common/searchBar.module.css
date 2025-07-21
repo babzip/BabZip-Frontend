@@ -112,6 +112,7 @@
 
 .modifyModal {
   z-index: 1005;
+  width: 100%;
 }
 
 .subAddress {
