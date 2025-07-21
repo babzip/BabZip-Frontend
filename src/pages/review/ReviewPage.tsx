@@ -81,7 +81,7 @@ const ReviewPage = ({
           onClick={(rate) => {
             setRating(rate);
           }}
-          initialValue={rating * 20}
+          initialValue={rating}
           allowFraction={true}
           size={24}
           fillColor='#FFD700'
