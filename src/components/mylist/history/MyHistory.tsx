@@ -27,6 +27,10 @@ const MyHistory = () => {
     if (option === 'rating') return '별점순';
   };
 
+  const filteredData = allData.filter((ele) =>
+    ele.restaurantName.toLowerCase().includes(searchValue.toLowerCase())
+  );
+
   const getAllDate = async () => {
     try {
       const response = await axios.get(
@@ -67,7 +71,7 @@ const MyHistory = () => {
         onChange={(e) => setSearchValue(e.currentTarget.value)}
       />
       <div className={styles.barBox}>
-        {allData.map((ele) => (
+        {filteredData.map((ele) => (
           <EateryHistoryBar
             key={ele.kakaoPlaceId}
             onClick={() => {}}
