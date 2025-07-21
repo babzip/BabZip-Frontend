@@ -5,6 +5,7 @@ import styles from './visitedEatery.module.css';
 import { useState } from 'react';
 
 type Props = {
+  shareUrl: string;
   restaurentName: string;
   location: string;
   visitedDate: Date;
@@ -17,6 +18,7 @@ type Props = {
 };
 
 const VisitedEatery = ({
+  shareUrl,
   restaurentName,
   location,
   visitedDate,
@@ -34,7 +36,7 @@ const VisitedEatery = ({
       navigator.share({
         title: restaurentName,
         text: `BabZip에서 ${restaurentName}을 공유합니다!`,
-        url: 'https://babzip.netlify.app/',
+        url: shareUrl,
       });
     } else {
       alert('공유하기를 지원하지 않는 환경입니다.');

@@ -15,6 +15,7 @@ type Props = {
 
 interface searchResultType {
   place_name: string;
+  place_url: string;
   category_name: string;
   distance: string;
   id: string;
@@ -27,6 +28,7 @@ interface searchResultType {
 
 const initialSelectedData: searchResultType = {
   place_name: '',
+  place_url: '',
   category_name: '',
   distance: '',
   id: '',
@@ -170,6 +172,7 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
             />
             <div className={styles.modal}>
               <VisitedEatery
+                shareUrl={selectedData.place_url}
                 onModifyClicked={() => {
                   setIsModalOn(false);
                   setIsModifyModalOn(true);
