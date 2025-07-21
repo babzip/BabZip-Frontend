@@ -211,6 +211,13 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
                   setMarker(null);
                   setCenter(lat, lng);
                 }}
+                onReviewSubmitted={() => {
+                  useMapStore.getState().addMarker({
+                    id: selectedData.id,
+                    lat: +selectedData.y,
+                    lng: +selectedData.x,
+                  });
+                }}
                 address={selectedData.address_name}
                 kakaoPlaceId={selectedData.id}
                 name={selectedData.place_name}

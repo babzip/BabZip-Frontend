@@ -13,7 +13,7 @@ type Lating = {
 
 function Kakaomap() {
   const { center, marker } = useMapStore();
-  const mapRef = useRef<kakao.maps.Map | null>(null);
+  const localMapRef = useRef<kakao.maps.Map | null>(null);
   const isSet = useRef(false);
   const setMapRef = useMapStore((state) => state.setMapRef);
   const setLocation = useLocationStore((state) => state.setLocation);
@@ -22,6 +22,7 @@ function Kakaomap() {
     lat: 33.450701,
     lng: 126.570667,
   });
+  const { markerList } = useMapStore();
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((pos) => {
@@ -47,12 +48,23 @@ function Kakaomap() {
         className={styles.map}
         onCreate={(map) => {
           if (!isSet.current) {
-            mapRef.current = map;
-            setMapRef(mapRef);
+            localMapRef.current = map;
+            setMapRef(localMapRef);
             isSet.current = true;
           }
         }}
       >
+        {markerList.map((marker) => (
+          <MapMarker
+            key={marker.id}
+            position={{ lat: marker.lat, lng: marker.lng }}
+            image={{
+              src: '/location.marker.svg',
+              size: { width: 30, height: 30 },
+            }}
+          />
+        ))}
+
         <MapMarker
           position={position}
           image={{

@@ -12,6 +12,7 @@ type Props = {
   visitedDate: Date;
   closeModal: () => void;
   initialRating?: number;
+  onReviewSubmitted?: () => void;
   initialContent?: string;
 };
 
@@ -21,6 +22,7 @@ const ReviewPage = ({
   kakaoPlaceId,
   visitedDate,
   closeModal,
+  onReviewSubmitted,
   initialContent,
   initialRating,
 }: Props) => {
@@ -64,6 +66,7 @@ const ReviewPage = ({
       }
 
       closeModal();
+      onReviewSubmitted?.();
     } catch (err) {
       console.error(err);
     }
