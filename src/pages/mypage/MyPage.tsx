@@ -1,9 +1,11 @@
-import { ChevronRight } from "lucide-react";
-import Header from "../../components/mypage/Header";
-import styles from "./mypage.module.css";
-import { useAuthStore } from "../../store/useAuthStore";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+
+import { ChevronRight } from 'lucide-react';
+import Header from '../../components/mypage/Header';
+import axios from 'axios';
+import styles from './mypage.module.css';
+import { useAuthStore } from '../../store/useAuthStore';
+import { useNavigate } from 'react-router-dom';
 
 function MyPage() {
   const [userInfo, setUserInfo] = useState<{
@@ -13,15 +15,33 @@ function MyPage() {
     restauranCount: string;
     averageRating: number;
   }>();
+  const { logout } = useAuthStore();
+  const navigate = useNavigate();
 
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = localStorage.getItem('accessToken');
   const getMyInfo = async () => {
     try {
-      const response = await axios.get("https://babzip.duckdns.org/user/me", {
+      const response = await axios.get('https://babzip.duckdns.org/user/me', {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       console.log(response.data.data);
       setUserInfo(response.data.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      const response = await axios.delete(
+        'https://babzip.duckdns.org/user/logout',
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+      );
+      console.log(response.data);
+      logout();
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      navigate('/');
     } catch (err) {
       console.error(err);
     }
@@ -35,7 +55,7 @@ function MyPage() {
     <div className={styles.container}>
       <Header />
       <div className={styles.profileImg}>
-        <img src={userInfo?.picture ?? ""} alt="프로필이미지" />
+        <img src={userInfo?.picture ?? ''} alt='프로필이미지' />
       </div>
       <div className={styles.nickname}>
         <div>닉네임</div>
@@ -59,19 +79,21 @@ function MyPage() {
       <div className={styles.socialAccount}>
         <div>연동된 소셜 계정</div>
         <div className={styles.iconBox}>
-          {userInfo?.provider?.toLowerCase() === "kakao" ? (
-            <img src="/kakao_icon.svg" />
+          {userInfo?.provider?.toLowerCase() === 'kakao' ? (
+            <img src='/kakao_icon.svg' />
           ) : (
-            <img src="/google_icon.svg" />
+            <img src='/google_icon.svg' />
           )}
         </div>
       </div>
 
       <div className={styles.etc}>
-        <div className={styles.logout}>로그아웃</div>
+        <div className={styles.logout} onClick={handleLogout}>
+          로그아웃
+        </div>
         <div
           className={styles.quit}
-          onClick={() => console.log("어딜나가잉 시져시져")}
+          onClick={() => console.log('어딜나가잉 시져시져')}
         >
           회원 탈퇴
         </div>
