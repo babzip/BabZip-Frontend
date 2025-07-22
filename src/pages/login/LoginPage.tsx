@@ -1,17 +1,18 @@
 import styles from './loginpage.module.css';
 
 function LoginPage() {
+  const apiUrl = import.meta.env.API_URL;
   const handleKakaoLogin = () => {
     const redirectUri = `${window.location.origin}/auth/success`;
     const encoded = encodeURIComponent(redirectUri);
-    const kakaoLoginUrl = `https://babzip.duckdns.org/oauth2/authorization/kakao?redirect_uri=${encoded}`;
+    const kakaoLoginUrl = `${apiUrl}/oauth2/authorization/kakao?redirect_uri=${encoded}`;
     window.location.href = kakaoLoginUrl;
   };
 
   const handleGoogleLogin = () => {
     const redirectUri = `${window.location.origin}/auth/success`;
     const encoded = encodeURIComponent(redirectUri);
-    const googleLoginUrl = `https://babzip.duckdns.org/oauth2/authorization/google?redirect_uri=${encoded}`;
+    const googleLoginUrl = `${apiUrl}/oauth2/authorization/google?redirect_uri=${encoded}`;
     window.location.href = googleLoginUrl;
   };
 

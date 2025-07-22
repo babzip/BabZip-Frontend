@@ -26,6 +26,7 @@ const ReviewPage = ({
   initialContent,
   initialRating,
 }: Props) => {
+  const apiUrl = import.meta.env.API_URL;
   const accessToken = localStorage.getItem('accessToken');
   const [value, setValue] = useState<string>('');
   const [rating, setRating] = useState<number>(0);
@@ -46,22 +47,14 @@ const ReviewPage = ({
     };
     try {
       if (initialContent && initialContent) {
-        const response = await axios.patch(
-          'https://babzip.duckdns.org/guestbook',
-          body,
-          {
-            headers: { Authorization: `Bearer ${accessToken}` },
-          }
-        );
+        const response = await axios.patch(`${apiUrl}/guestbook`, body, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
         console.log('[수정 결과] : ', response);
       } else {
-        const response = await axios.post(
-          'https://babzip.duckdns.org/guestbook',
-          body,
-          {
-            headers: { Authorization: `Bearer ${accessToken}` },
-          }
-        );
+        const response = await axios.post(`${apiUrl}/guestbook`, body, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
         console.log('[작성 결과] : ', response);
       }
 

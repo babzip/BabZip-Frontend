@@ -40,6 +40,7 @@ const initialSelectedData: searchResultType = {
 };
 
 const SearchBar = ({ value, placeholder, onChange }: Props) => {
+  const apiUrl = import.meta.env.API_URL;
   const [searchResult, setSearchResult] = useState<searchResultType[]>([]);
   const [selectedData, setSelectedData] =
     useState<searchResultType>(initialSelectedData);
@@ -61,12 +62,9 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
 
   const searchVisited = async (query: string) => {
     try {
-      const response = await axios.get(
-        `https://babzip.duckdns.org/guestbook/search/${query}`,
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        }
-      );
+      const response = await axios.get(`${apiUrl}/guestbook/search/${query}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
       console.log(response.data.data);
       if (response.data.data.content.length == 0) {
         return false;
@@ -90,13 +88,9 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
       page: 1,
     };
     try {
-      const response = await axios.post(
-        'https://babzip.duckdns.org/search',
-        body,
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        }
-      );
+      const response = await axios.post(`${apiUrl}/search`, body, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
       console.log('[요청결과] : ', response.data.data.documents);
       setSearchResult(response.data.data.documents);
       setResultOn(true);
@@ -119,7 +113,7 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
     const kakaoPlaceId = ele.id;
     try {
       const response = await axios.delete(
-        `https://babzip.duckdns.org/guestbook/${kakaoPlaceId}`,
+        `${apiUrl}/guestbook/${kakaoPlaceId}`,
         {
           headers: { Authorization: `Bearer ${accessToken}` },
         }

@@ -9,6 +9,7 @@ import axios from 'axios';
 import styles from './myhistory.module.css';
 
 const MyHistory = () => {
+  const apiUrl = import.meta.env.API_URL;
   const [allData, setAllData] = useState<EateryHistoryBarType[]>([]);
   const [searchValue, setSearchValue] = useState<string>('');
   const [isOptionModalOn, setIsOptionModalOn] = useState<boolean>(false);
@@ -34,7 +35,7 @@ const MyHistory = () => {
   const getAllDate = async () => {
     try {
       const response = await axios.get(
-        `https://babzip.duckdns.org/guestbook/me?page=${
+        `${apiUrl}/guestbook/me?page=${
           selectedPage - 1
         }&sort=${mappingSortQuery(sortOption)}`,
         {

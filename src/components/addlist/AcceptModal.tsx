@@ -11,6 +11,7 @@ type Props = {
 };
 
 const AcceptModal = ({ name, address, rank, onCancel }: Props) => {
+  const apiUrl = import.meta.env.API_URL;
   const navigate = useNavigate();
   const accessToken = localStorage.getItem('accessToken');
   const { updateRank } = useTop10Store();
@@ -19,7 +20,7 @@ const AcceptModal = ({ name, address, rank, onCancel }: Props) => {
 
     const updated = useTop10Store.getState().rankData;
     try {
-      await axios.post('https://babzip.duckdns.org/top10', updated, {
+      await axios.post(`${apiUrl}/top10`, updated, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
     } catch (err) {

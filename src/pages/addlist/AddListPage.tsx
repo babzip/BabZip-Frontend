@@ -11,6 +11,7 @@ import axios from 'axios';
 import styles from './addListPage.module.css';
 
 function AddListPage() {
+  const apiUrl = import.meta.env.API_URL;
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState<string>('');
   const [isAddModalOn, setIsAddModalOn] = useState<boolean>(false);
@@ -43,7 +44,7 @@ function AddListPage() {
   const getAllData = async () => {
     try {
       const response = await axios.get(
-        `https://babzip.duckdns.org/guestbook/me?page=${
+        `${apiUrl}/guestbook/me?page=${
           selectedPage - 1
         }&sort=${mappingSortQuery(sortOption)}`,
         {

@@ -11,6 +11,7 @@ import {
 } from '../../../store/useTop10Store';
 
 const MyRanking = () => {
+  const apiUrl = import.meta.env.API_URL;
   const [isEditMode, setIsEditMode] = useState(false);
   const [isDeleteModalOn, setIsDeleteModalOn] = useState(false);
   const [selectedRank, setSelectedRank] = useState(0);
@@ -25,7 +26,7 @@ const MyRanking = () => {
 
   const getTop10Data = async () => {
     try {
-      const res = await axios.get('https://babzip.duckdns.org/top10', {
+      const res = await axios.get(`${apiUrl}/top10`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       setRankData(res.data.data.content);
@@ -37,7 +38,7 @@ const MyRanking = () => {
 
   const editTop10Data = async (data: RankingDataType[]) => {
     try {
-      const res = await axios.post('https://babzip.duckdns.org/top10', data, {
+      const res = await axios.post(`${apiUrl}/top10`, data, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       console.log(res);

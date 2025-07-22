@@ -8,6 +8,7 @@ import { useAuthStore } from '../../store/useAuthStore';
 import { useNavigate } from 'react-router-dom';
 
 function MyPage() {
+  const apiUrl = import.meta.env.API_URL;
   const [userInfo, setUserInfo] = useState<{
     name: string;
     picture: string;
@@ -21,7 +22,7 @@ function MyPage() {
   const accessToken = localStorage.getItem('accessToken');
   const getMyInfo = async () => {
     try {
-      const response = await axios.get('https://babzip.duckdns.org/user/me', {
+      const response = await axios.get(`${apiUrl}/user/me`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       console.log(response.data.data);
@@ -33,10 +34,9 @@ function MyPage() {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.delete(
-        'https://babzip.duckdns.org/user/logout',
-        { headers: { Authorization: `Bearer ${accessToken}` } }
-      );
+      const response = await axios.delete(`${apiUrl}/user/logout`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
       console.log(response.data);
       logout();
       localStorage.removeItem('accessToken');

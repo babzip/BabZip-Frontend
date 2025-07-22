@@ -5,11 +5,12 @@ import { useAuthStore } from '../../store/useAuthStore';
 import { useEffect } from 'react';
 
 function OAuthRedirectPage() {
+  const apiUrl = import.meta.env.API_URL;
   const navigate = useNavigate();
   const location = useLocation();
   const handleMyInfo = async (accessToken: string) => {
     try {
-      const response = await axios.get('https://babzip.duckdns.org/user/me', {
+      const response = await axios.get(`${apiUrl}/user/me`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
