@@ -8,7 +8,7 @@
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 
 | 화면 종류 | 스크린샷 |
@@ -21,14 +21,14 @@
 | TOP10 기능 | <img alt="TOP10 기능" src="https://github.com/user-attachments/assets/c53ffd6f-e918-4e33-888a-93f693a4bf15" width="900" /> |
 
 
-## 🎨 Brand
+## Brand
 
 - **Primary**: `#121212`  
 - **Accent**: `#FFD60A`
 
 ---
 
-## 🚀 기술 스택
+## 기술 스택
 
 - **Framework**: React + TypeScript (Vite 권장)
 - **Routing**: React Router
@@ -64,7 +64,7 @@ babzip/
 
 ---
 
-## ⚙️ 환경 변수
+## 환경 변수
 
 `.env` (Vite 기준)는 `VITE_` 접두어를 사용합니다.
 
@@ -76,7 +76,7 @@ VITE_MAP_JS_KEY=YOUR_MAP_KEY
 
 ---
 
-## 🛠️ 주요 기능
+## 주요 기능
 
 ### 1) 빠른 식당 찾기 & 내 위치 기반 주변 탐색
 - **검색엔진**으로 식당을 빠르게 찾고, **GPS**로 주변 식당을 확인합니다.
@@ -92,7 +92,7 @@ VITE_MAP_JS_KEY=YOUR_MAP_KEY
 
 ---
 
-## ▶️ 실행 방법
+## 실행 방법
 
 ```bash
 # 1) 설치
@@ -111,7 +111,7 @@ npm run preview
 
 ---
 
-## 📌 TODO
+## TODO
 
 - [ ] 검색·필터 UX 고도화
 - [ ] 랭킹(숟가락) 편집/공유 플로우 강화
