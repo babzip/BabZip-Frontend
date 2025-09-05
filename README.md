@@ -1,4 +1,4 @@
-# Babzip (밥집)
+# Babzip_밥집
 
 **Babzip**은 “한 손에 담은 나의 먹거리 일기장”을 지향하는 맛집 기록/관리 서비스입니다.  
 검색·GPS로 주변 식당을 빠르게 찾고, 방문 일자·별점·사진·메모를 남겨 **개인화된 맛집 다이어리**를 만들 수 있어요.  
@@ -14,11 +14,13 @@
 
 | 화면 종류 | 스크린샷 |
 | --- | --- |
-| 홈 | _이미지 추가_ |
-| 맛집 기록 작성 | _이미지 추가_ |
-| 랭킹(숟가락) | _이미지 추가_ |
+| 메인 | <img alt="메인" src="https://github.com/user-attachments/assets/3aeeb23e-4856-4daa-a1e9-0567af0cb7c0" width="900" /> |
+| 와이어프레임 | <img alt="와이어프레임" src="https://github.com/user-attachments/assets/5c62c1bc-3fc1-49c3-a028-7cf3ccbf45a1" width="900" /> |
+| 검색 | <img alt="검색" src="https://github.com/user-attachments/assets/7c112900-368a-4141-8239-a02d8591f495" width="900" /> |
+| 내 정보 페이지 | <img alt="내 정보 페이지" src="https://github.com/user-attachments/assets/459d2fdf-71fe-42ca-a111-4a667a00c194" width="900" /> |
+| 맛집 등록 과정 | <img alt="맛집 등록 과정" src="https://github.com/user-attachments/assets/19786fe3-200c-4c90-8b3d-ca8e322b93df" width="900" /> |
+| TOP10 기능 | <img alt="TOP10 기능" src="https://github.com/user-attachments/assets/c53ffd6f-e918-4e33-888a-93f693a4bf15" width="900" /> |
 
----
 
 ## 🎨 Brand
 
@@ -31,10 +33,10 @@
 
 - **Framework**: React + TypeScript (Vite 권장)
 - **Routing**: React Router
-- **State**: (예: Zustand or Redux — 실제 사용에 맞춰 수정)
-- **Styles**: styled-components (또는 Tailwind 등 팀 표준에 맞춰 변경)
+- **State**: Zustand
+- **Styles**: Module Scss
 - **HTTP**: axios
-- **Build/Deploy**: Vite build, static hosting (Vercel/Netlify/S3 등)
+- **Build/Deploy**: Vite build, Vercel
 
 > Babzip 핵심 경험은 **검색엔진(빠른 식당 찾기)**, **GPS(내 위치 기반 주변 식당 확인)**, **개인화 다이어리**에 기반합니다.
 
@@ -88,27 +90,6 @@ VITE_MAP_JS_KEY=YOUR_MAP_KEY
 
 ### 4) 계정/보안
 - **쉽고 간편한 로그인**과 **강력한 보안 체제**를 지향합니다. (구현 방식은 실제 스펙에 맞춰 보완)
-
----
-
-## 💰 수익화 & 프리미엄 (기획)
-
-- **광고 노출**: 내 위치 주변 음식점 광고 & 인앱 광고 (CPM/CPA)
-- **데이터/API (B2B)**: 마케팅사/배달 플랫폼/음식점에 **익명화된 사용자 정보** 제공
-
-**프리미엄 구독** 예시
-- **무제한 맛집 저장** (일반 사용자는 기록 쿨타임 적용, 구독자는 해제)
-- **내 방문 분석**: 어떤 시간/조건에서 만족도가 높았는지 **AI 분석**
-- **개인 맞춤 제안**: 행복한 식사를 위한 **최적 시간** 등 인사이트 제공
-- **식단 자동화 확장**: 기록 기반으로 **식단 자동 생성/관리** 앱으로 확장 가능
-
----
-
-## 🎯 기대효과 (요약)
-
-- **기억/재방문 편의성**: 흩어졌던 맛집 정보(갤러리/노트)를 한곳에서 쉽게 찾고, 재방문 기능으로 다시 가기 쉬움.
-- **개인 다이어리**: 나만의 **미식 다이어리**로 꾸준히 기록/관리.
-- **성장/커뮤니티/수익 확장성**: 사용자 데이터 기반 추천·식단관리로의 확장, 공유 현황을 바탕으로 커뮤니티화, 예약·광고 등 수익 다각화.
 
 ---
 
