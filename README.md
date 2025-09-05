@@ -1,69 +1,130 @@
-# React + TypeScript + Vite
+Babzip (밥집)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Babzip은 “한 손에 담은 나의 먹거리 일기장”을 지향하는 맛집 기록/관리 서비스입니다.
+검색·GPS로 주변 식당을 빠르게 찾고, 방문 일자·별점·사진·메모를 남겨 개인화된 맛집 다이어리를 만들 수 있어요. 금·은·동 숟가락 아이콘으로 내가 뽑은 맛집 랭킹을 시각적으로 관리할 수 있습니다.
+태그라인: “한 손에 담은 나의 먹거리 일기장”.
 
-Currently, two official plugins are available:
+📸 Screenshots
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+사용 중인 화면 캡처 이미지를 아래 표에 교체/추가해줘.
 
-## Expanding the ESLint configuration
+화면 종류	스크린샷
+홈	(이미지 추가)
+맛집 기록 작성	(이미지 추가)
+랭킹(숟가락)	(이미지 추가)
+🎨 Brand
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Primary: #121212
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Accent: #FFD60A
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+🚀 기술 스택
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Framework: React + TypeScript (Vite 권장)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Routing: React Router
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+State: (예: Zustand or Redux — 실제 사용에 맞춰 수정)
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Styles: styled-components (또는 Tailwind 등 팀 표준에 맞춰 변경)
+
+HTTP: axios
+
+Build/Deploy: Vite build, static hosting (Vercel/Netlify/S3 등)
+
+Babzip 핵심 경험은 검색엔진(빠른 식당 찾기), GPS(내 위치 기반 주변 식당 확인), 개인화 다이어리에 기반해요.
+
+📂 프로젝트 구조
+babzip/
+├── public/                 # 정적 리소스
+├── src/
+│   ├── app/                # App 엔트리/라우터 세팅
+│   ├── pages/              # 페이지 단위 컴포넌트
+│   ├── components/         # 재사용 UI 컴포넌트
+│   ├── features/           # 도메인 모듈(기록/랭킹/검색 등)
+│   ├── hooks/              # 커스텀 훅 (예: useQuery, useGPS)
+│   ├── services/           # API 클라이언트/토큰 유틸
+│   ├── store/              # 전역 상태(Zustand/Redux 등)
+│   ├── styles/             # 글로벌 스타일/테마
+│   └── types/              # 타입 정의
+├── .env.example
+├── index.html
+├── package.json
+└── vite.config.ts
+
+⚙️ 환경 변수
+
+.env (Vite 기준)는 VITE_ 접두어를 사용합니다.
+
+VITE_API_BASE_URL=https://api.babzip.example
+# (선택) 맵/외부서비스 키
+VITE_MAP_JS_KEY=YOUR_MAP_KEY
+
+🛠️ 주요 기능
+1) 빠른 식당 찾기 & 내 위치 기반 주변 탐색
+
+검색엔진으로 식당을 빠르게 찾고, GPS로 주변 식당을 확인합니다.
+
+2) 맛집 기록(다이어리)
+
+방문 일자, 별점, 사진 업로드, 간단 메모를 남겨 다이어리를 만들 수 있어요.
+
+3) 나만의 랭킹(숟가락 시스템)
+
+금·은·동 숟가락 아이콘으로 미식 수준과 선호도를 직접 랭킹으로 관리해요. 다음 탐방의 나침반 역할을 합니다.
+
+4) 계정/보안
+
+쉽고 간편한 로그인과 강력한 보안 체제를 지향합니다. (구현 방식은 실제 스펙에 맞춰 보완)
+
+💰 수익화 & 프리미엄 (기획)
+
+광고 노출: 내 위치 주변 음식점 광고 & 인앱 광고 (CPM/CPA)
+
+데이터/API (B2B): 마케팅사/배달 플랫폼/음식점에 익명화된 사용자 정보 제공
+
+프리미엄 구독:
+
+무제한 맛집 저장 (일반 사용자는 기록 쿨타임 적용, 구독자는 해제)
+
+내 방문 분석: 어떤 시간/조건에서 만족도가 높았는지 AI 분석
+
+개인 맞춤 제안: 행복한 식사를 위한 최적 시간 등 인사이트 제공
+
+식단 자동화 확장: 기록 기반으로 식단 자동 생성/관리 앱으로 확장 가능
+
+🎯 기대효과 (요약)
+
+기억/재방문 편의성: 흩어졌던 맛집 정보(갤러리/노트)를 한곳에서 쉽게 찾고, 재방문 기능으로 다시 가기 쉬움.
+
+개인 다이어리: 나만의 미식 다이어리로 꾸준히 기록/관리.
+
+성장/커뮤니티/수익 확장성: 사용자 데이터 기반 추천·식단관리로의 확장, 공유 현황을 바탕으로 커뮤니티화, 예약·광고 등 수익 다각화.
+
+▶️ 실행 방법
+# 1) 설치
+npm install
+
+# 2) 환경 변수 설정
+cp .env.example .env  # 값 채우기
+
+# 3) 개발 실행
+npm run dev
+
+# 4) 프로덕션 빌드
+npm run build
+npm run preview
+
+📌 TODO
+
+ 검색·필터 UX 고도화
+
+ 랭킹(숟가락) 편집/공유 플로우 강화
+
+ 지도(GPS) 클러스터링/성능 최적화
+
+ 이미지 업로드 진행률/압축 처리
+
+ 프리미엄 구독/결제 플로우 설계
+
+ 방문 분석 AI(시간/조건 추천) 프로토타입
