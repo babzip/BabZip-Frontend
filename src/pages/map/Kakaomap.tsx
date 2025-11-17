@@ -12,6 +12,7 @@ type Lating = {
 };
 
 function Kakaomap() {
+  const [loaded, setLoaded] = useState(false);
   const { center, marker } = useMapStore();
   const localMapRef = useRef<kakao.maps.Map | null>(null);
   const isSet = useRef(false);
@@ -23,6 +24,19 @@ function Kakaomap() {
     lng: 126.570667,
   });
   const { markerList } = useMapStore();
+
+  useEffect(() => {
+    if (window.kakao && window.kakao.maps) {
+      setLoaded(true);
+    } else {
+      const id = setInterval(() => {
+        if (window.kakao && window.kakao.maps) {
+          setLoaded(true);
+          clearInterval(id);
+        }
+      }, 50);
+    }
+  }, []);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((pos) => {
@@ -39,6 +53,8 @@ function Kakaomap() {
 
     return () => navigator.geolocation.clearWatch(watcher);
   }, [setLocation]);
+
+  if (!loaded) return <div>지도 로딩 중...</div>;
 
   return (
     <div className={styles.wrapper}>
