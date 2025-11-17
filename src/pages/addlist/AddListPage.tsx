@@ -11,7 +11,7 @@ import axios from 'axios';
 import styles from './addListPage.module.css';
 
 function AddListPage() {
-  const apiUrl = import.meta.env.API_URL;
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState<string>('');
   const [isAddModalOn, setIsAddModalOn] = useState<boolean>(false);

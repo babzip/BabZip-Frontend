@@ -1,7 +1,7 @@
 import styles from './loginpage.module.css';
 
 function LoginPage() {
-  const apiUrl = import.meta.env.API_URL;
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const handleKakaoLogin = () => {
     const redirectUri = `${window.location.origin}/auth/success`;
     const encoded = encodeURIComponent(redirectUri);

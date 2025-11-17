@@ -8,7 +8,7 @@ import { useAuthStore } from '../../store/useAuthStore';
 import { useNavigate } from 'react-router-dom';
 
 function MyPage() {
-  const apiUrl = import.meta.env.API_URL;
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const [userInfo, setUserInfo] = useState<{
     name: string;
     picture: string;

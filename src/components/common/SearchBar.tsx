@@ -40,7 +40,7 @@ const initialSelectedData: searchResultType = {
 };
 
 const SearchBar = ({ value, placeholder, onChange }: Props) => {
-  const apiUrl = import.meta.env.API_URL;
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const [searchResult, setSearchResult] = useState<searchResultType[]>([]);
   const [selectedData, setSelectedData] =
     useState<searchResultType>(initialSelectedData);

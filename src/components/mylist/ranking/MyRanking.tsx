@@ -11,7 +11,7 @@ import {
 } from '../../../store/useTop10Store';
 
 const MyRanking = () => {
-  const apiUrl = import.meta.env.API_URL;
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const [isEditMode, setIsEditMode] = useState(false);
   const [isDeleteModalOn, setIsDeleteModalOn] = useState(false);
   const [selectedRank, setSelectedRank] = useState(0);

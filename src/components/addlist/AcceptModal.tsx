@@ -11,7 +11,7 @@ type Props = {
 };
 
 const AcceptModal = ({ name, address, rank, onCancel }: Props) => {
-  const apiUrl = import.meta.env.API_URL;
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate();
   const accessToken = localStorage.getItem('accessToken');
   const { updateRank } = useTop10Store();

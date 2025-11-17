@@ -26,7 +26,7 @@ const ReviewPage = ({
   initialContent,
   initialRating,
 }: Props) => {
-  const apiUrl = import.meta.env.API_URL;
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const accessToken = localStorage.getItem('accessToken');
   const [value, setValue] = useState<string>('');
   const [rating, setRating] = useState<number>(0);

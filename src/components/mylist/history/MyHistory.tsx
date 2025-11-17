@@ -9,7 +9,7 @@ import axios from 'axios';
 import styles from './myhistory.module.css';
 
 const MyHistory = () => {
-  const apiUrl = import.meta.env.API_URL;
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const [allData, setAllData] = useState<EateryHistoryBarType[]>([]);
   const [searchValue, setSearchValue] = useState<string>('');
   const [isOptionModalOn, setIsOptionModalOn] = useState<boolean>(false);
