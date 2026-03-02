@@ -29,25 +29,31 @@
   pointer-events: none;
 }
 
-.infoWindow {
-  min-width: 180px;
-  max-width: 240px;
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid #e6e8ec;
-  background-color: #fff;
-  box-shadow: 0 8px 24px rgba(17, 24, 39, 0.12);
+.modalRoot {
+  width: 100%;
+  z-index: 1004;
+  position: absolute;
+  bottom: 0;
 }
 
-.infoTitle {
-  font-size: 14px;
-  font-weight: 700;
-  color: #111827;
+.modal {
+  width: 100%;
+  z-index: 1004;
+  position: absolute;
+  bottom: 0;
 }
 
-.infoAddress {
-  margin-top: 4px;
-  font-size: 12px;
-  line-height: 1.4;
-  color: #4b5563;
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1003;
+}
+
+.modifyModal {
+  z-index: 1005;
+  width: 100%;
 }
