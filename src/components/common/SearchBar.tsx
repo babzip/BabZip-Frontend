@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { Search } from 'lucide-react';
 import axios from 'axios';
 import styles from './searchBar.module.css';
@@ -81,6 +81,11 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
   };
 
   const handleSearch = async (val: string, x: number, y: number) => {
+    if (!val.trim()) {
+      setResultOn(false);
+      return;
+    }
+
     const body = {
       query: val,
       x: x,
@@ -97,6 +102,11 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const handleSubmitSearch = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await handleSearch(value, lng, lat);
   };
 
   const handleSelectData = async (ele: searchResultType) => {
@@ -126,7 +136,7 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.searchBar}>
+      <form className={styles.searchBar} onSubmit={handleSubmitSearch}>
         <input
           type='text'
           value={value}
@@ -134,8 +144,10 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
           placeholder={placeholder}
           onChange={onChange}
         />
-        <Search onClick={() => handleSearch(value, lng, lat)} color='#7d7aff' />
-      </div>
+        <button type='submit' className={styles.searchBtn} aria-label='검색'>
+          <Search size={18} />
+        </button>
+      </form>
       <div className={styles.searchResult}>
         {resultOn &&
           (searchResult.length > 0 ? (

@@ -2,10 +2,9 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   pointer-events: auto;
-  /* z-index: 1002; */
 }
 
 .content {
@@ -17,58 +16,86 @@
 }
 
 .searchBar {
-  margin: 2rem 1rem 0 1rem;
+  margin: 1.25rem 1rem 0.5rem 1rem;
   width: 80%;
-  padding: 0 1rem;
+  padding: 0 0.4rem 0 0.9rem;
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #7d7aff;
-  border-radius: 8px;
-  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background-color: #ffffff;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.07);
 }
 
 .input {
   width: 100%;
-  padding: 0.8rem 0.2rem;
-  border-radius: 8px;
+  padding: 0.85rem 0.2rem;
+  font-size: 0.95rem;
   border: none;
   outline: none;
+  background-color: transparent;
+}
+
+.input::placeholder {
+  color: #9ca3af;
+}
+
+.searchBtn {
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: 10px;
+  background-color: #f3f4f6;
+  color: #4b5563;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.searchBtn:hover {
+  background-color: #e5e7eb;
 }
 
 .searchResult {
   width: 80%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0 1rem 1rem 1rem;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 0;
+  margin-top: 0.15rem;
+  border: 1px solid #edf0f3;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  overflow: hidden;
 }
 
 .element {
   width: 100%;
-  padding: 0.8rem 1rem;
-  font-size: 0.8rem;
-  border-bottom: 1px solid #eee;
+  padding: 0.85rem 0.95rem;
+  font-size: 0.86rem;
+  border-bottom: 1px solid #f1f3f5;
   transition: background-color 0.2s;
   cursor: pointer;
-  background-color: white;
+  background-color: #ffffff;
 }
 
 .element:hover {
-  background-color: #f5f5ff;
+  background-color: #f8fafc;
 }
 
 .element:first-child {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
 }
 
 .element:last-child {
   border-bottom: none;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
 
 .modal {
@@ -124,7 +151,9 @@
 }
 
 .subAddress {
-  font-size: 0.8em;
-  color: #cdd1d5;
-  margin-left: 0.4rem;
+  display: block;
+  margin-top: 0.2rem;
+  margin-left: 0;
+  font-size: 0.78rem;
+  color: #9ca3af;
 }
