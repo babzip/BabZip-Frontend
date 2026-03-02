@@ -14,7 +14,7 @@ const SelectSortOptionModal = ({ selected, onChange }: Props) => {
       <div
         className={styles.latestTab}
         onClick={() => onChange('latest')}
-        style={selected === 'latest' ? { color: '#7D7AFF' } : undefined}
+        style={selected === 'latest' ? { color: '#726fe8' } : undefined}
       >
         <div>최신순</div>
         <div>{selected === 'latest' ? <Check /> : ''}</div>
@@ -22,7 +22,7 @@ const SelectSortOptionModal = ({ selected, onChange }: Props) => {
       <div
         className={styles.ratingTab}
         onClick={() => onChange('rating')}
-        style={selected === 'rating' ? { color: '#7D7AFF' } : undefined}
+        style={selected === 'rating' ? { color: '#726fe8' } : undefined}
       >
         <div>별점순</div>
         <div>{selected === 'rating' ? <Check /> : ''}</div>

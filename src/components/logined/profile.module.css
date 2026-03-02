@@ -1,16 +1,17 @@
 .container {
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 2px solid #7d7aff;
+  border: 1px solid #e5e7eb;
   overflow: hidden;
   background-color: white;
   cursor: pointer;
   box-sizing: border-box;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
 }
 
 .container > img {

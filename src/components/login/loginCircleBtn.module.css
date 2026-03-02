@@ -1,11 +1,16 @@
 .container {
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: #7d7aff;
-  color: white;
+  background-color: #ffffff;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+  cursor: pointer;
 }

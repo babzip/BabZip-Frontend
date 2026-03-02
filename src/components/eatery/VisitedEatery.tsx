@@ -29,7 +29,6 @@ const VisitedEatery = ({
   onModifyClicked,
   onDeleteClicked,
 }: Props) => {
-  const [isFullView, setIsFullView] = useState<boolean>(false);
   const [isCheckModalOn, setIsCheckModalOn] = useState<boolean>(false);
   const handleShare = () => {
     if (navigator.share) {
@@ -44,72 +43,55 @@ const VisitedEatery = ({
   };
 
   return (
-    <div
-      className={`${styles.container} ${
-        isFullView && visited ? styles.fullView : styles.unFullView
-      }`}
-    >
+    <div className={styles.container}>
+      <div className={styles.sheetHandle} />
       <div className={styles.shareIcon} onClick={() => handleShare()}>
-        <Share size={18} color='#CDD1D5' />
+        <Share size={18} color='#6b7280' />
       </div>
       <div className={styles.topBar}>
-        <hr onClick={() => setIsFullView(!isFullView)} />
-        <div className={styles.title}>{restaurentName}</div>
-        <div className={styles.subTitle}>
-          {visited
-            ? `${visitedDate.getFullYear()}년 ${
-                visitedDate.getMonth() + 1
-              }월 ${visitedDate.getDate()}일 방문`
-            : '새로운 맛집'}
+        <div className={styles.titleWrap}>
+          <div className={styles.title}>{restaurentName}</div>
+          <div className={styles.address}>{location}</div>
+          <div className={styles.subTitle}>
+            {visited
+              ? `${visitedDate.getFullYear()}년 ${
+                  visitedDate.getMonth() + 1
+                }월 ${visitedDate.getDate()}일 방문`
+              : '아직 기록이 없는 가게입니다.'}
+          </div>
         </div>
-        <div className={styles.address}>{location}</div>
-        {!visited ? (
-          <button onClick={onAddClicked} className={styles.addBtn}>
-            추가하기
-          </button>
+        {visited ? (
+          <div className={styles.rating}>
+            <Star size={16} fill='#facc15' color='#facc15' />
+            <span>{rating.toFixed(1)}</span>
+          </div>
         ) : (
           ''
         )}
-        {visited && (
-          <>
-            <p
-              className={styles.review}
-              style={isFullView ? { height: '60%' } : { height: '100%' }}
-            >
-              {textContent}
-            </p>
-            {isFullView ? (
-              <div className={styles.btnBox}>
-                <button
-                  className={styles.deleteBtn}
-                  onClick={() => setIsCheckModalOn(true)}
-                >
-                  삭제하기
-                </button>
-                <button className={styles.modBtn} onClick={onModifyClicked}>
-                  수정하기
-                </button>
-              </div>
-            ) : (
-              <button
-                className={`${styles.modifyBtn} ${
-                  isFullView ? styles.fullViewBtn : styles.unFullViewBtn
-                }`}
-                onClick={onModifyClicked}
-              >
-                수정하기
-              </button>
-            )}
-          </>
-        )}
       </div>
-      {visited ? (
-        <div className={styles.rating}>
-          <Star size={20} fill='yellow' />
-          <span>{rating}</span>
-        </div>
+
+      {!visited ? (
+        <div className={styles.emptyCard}>방문 기록을 추가해 보세요.</div>
       ) : (
-        ''
+        <div className={styles.review}>{textContent}</div>
+      )}
+
+      {!visited ? (
+        <button onClick={onAddClicked} className={styles.addBtn}>
+          기록 추가하기
+        </button>
+      ) : (
+        <div className={styles.btnBox}>
+          <button
+            className={styles.deleteBtn}
+            onClick={() => setIsCheckModalOn(true)}
+          >
+            삭제하기
+          </button>
+          <button className={styles.modBtn} onClick={onModifyClicked}>
+            수정하기
+          </button>
+        </div>
       )}
       {isCheckModalOn ? (
         <div className={styles.overlay}>

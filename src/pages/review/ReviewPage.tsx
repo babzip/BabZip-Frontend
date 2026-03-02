@@ -66,38 +66,48 @@ const ReviewPage = ({
   };
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>{name}</h2>
-      <p className={styles.date}>{`${visitedDate.getFullYear()}년 ${
-        visitedDate.getMonth() + 1
-      }월 ${visitedDate.getDate()}일`}</p>
-      <p className={styles.address}>{address}</p>
-
-      <div className={styles.starReview}>
-        <Rating
-          onClick={(rate) => {
-            setRating(rate);
-          }}
-          initialValue={rating}
-          allowFraction={true}
-          size={24}
-          fillColor='#FFD700'
-          emptyColor='#ccc'
-          transition
-        />
+      <div className={styles.sheetHandle} />
+      <div className={styles.header}>
+        <h2 className={styles.title}>{name}</h2>
+        <p className={styles.date}>{`${visitedDate.getFullYear()}년 ${
+          visitedDate.getMonth() + 1
+        }월 ${visitedDate.getDate()}일 방문`}</p>
+        <p className={styles.address}>{address}</p>
       </div>
-      <textarea
-        placeholder='메세지를 입력하세요.'
-        className={styles.memo}
-        value={value}
-        onChange={(e) => setValue(e.currentTarget.value)}
-      ></textarea>
 
-      <button
-        className={styles.editBtn}
-        onClick={() => setIsCheckModalOn(true)}
-      >
-        완료
-      </button>
+      <div className={styles.formArea}>
+        <div className={styles.label}>별점</div>
+        <div className={styles.starReview}>
+          <Rating
+            onClick={(rate) => {
+              setRating(rate);
+            }}
+            initialValue={rating}
+            allowFraction={true}
+            size={26}
+            fillColor='#facc15'
+            emptyColor='#d1d5db'
+            transition
+          />
+        </div>
+
+        <div className={styles.label}>메모</div>
+        <textarea
+          placeholder='방문 후기를 남겨보세요.'
+          className={styles.memo}
+          value={value}
+          onChange={(e) => setValue(e.currentTarget.value)}
+        ></textarea>
+      </div>
+
+      <div className={styles.footer}>
+        <button
+          className={styles.editBtn}
+          onClick={() => setIsCheckModalOn(true)}
+        >
+          {initialContent ? '수정 완료' : '작성 완료'}
+        </button>
+      </div>
 
       <div className={styles.modal}>
         {isCheckModalOn && (

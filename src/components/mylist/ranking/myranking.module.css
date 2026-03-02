@@ -26,9 +26,12 @@
 }
 
 .editIcon {
-  padding: 1rem;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  background-color: #7d7aff;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
   position: absolute;
   right: 2rem;
   bottom: 10rem;
@@ -46,11 +49,12 @@
 
 .btnBox > button {
   width: 70%;
-  padding: 0.5rem;
-  background-color: #7d7aff;
+  height: 42px;
+  background-color: #726fe8;
   color: white;
-  border: none;
-  border-radius: 8px;
+  border: 1px solid #726fe8;
+  border-radius: 10px;
+  font-weight: 600;
 }
 
 .modal {
@@ -69,6 +73,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(15, 23, 42, 0.24);
+  backdrop-filter: blur(1px);
   z-index: 100;
 }

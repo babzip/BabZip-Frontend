@@ -1,8 +1,7 @@
 .image {
-  width: 60px;
-  height: 60px;
-  cursor: pointer;
-  margin-top: 40px;
+  width: 48px;
+  height: 48px;
+  margin-top: 0.25rem;
 }
 
 .text {
@@ -13,22 +12,22 @@
 
 .DelBtn {
   width: 100%;
-  padding: 10px;
-  background-color: #7d7aff;
+  height: 42px;
+  background-color: #726fe8;
   color: white;
-  border: none;
-  border-radius: 8px;
+  border: 1px solid #726fe8;
+  border-radius: 10px;
   font-weight: bold;
   cursor: pointer;
 }
 
 .CancelBtn {
   width: 100%;
-  padding: 10px;
-  background-color: #e0e0e0;
-  color: #333;
-  border: none;
-  border-radius: 8px;
+  height: 42px;
+  background-color: #ffffff;
+  color: #4b5563;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
   cursor: pointer;
 }
 
@@ -36,18 +35,28 @@
   display: flex;
   width: 100%;
   flex-direction: row;
-  gap: 30px;
-  width: 60%;
-  padding: 20px;
+  gap: 0.65rem;
+  padding-top: 0.75rem;
 }
 
 .wrapper {
-  width: 80%;
+  width: min(calc(100vw - 24px), 360px);
   background-color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: absolute;
-  border-radius: 10px;
-  padding: 1rem;
+  position: relative;
+  border-radius: 14px;
+  padding: 1.15rem;
+  border: 1px solid #eef0f2;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+  box-sizing: border-box;
+}
+
+.wrapper > p {
+  margin: 0.55rem 0 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #111827;
+  text-align: center;
 }

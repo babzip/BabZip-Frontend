@@ -240,8 +240,8 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
           </>
         )}
       </div>
-      <div className={styles.modifyModal}>
-        {isModifyModalOn ? (
+      {isModifyModalOn ? (
+        <div className={styles.modifyModal}>
           <>
             <div
               className={styles.modalOverlay}
@@ -267,10 +267,10 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
               />
             </div>
           </>
-        ) : (
-          ''
-        )}
-      </div>
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 };

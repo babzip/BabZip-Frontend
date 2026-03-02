@@ -1,26 +1,35 @@
 .container {
-  width: 18rem;
-  position: fixed;
-  padding: 2rem;
-  right: 1rem;
-  top: 20rem;
+  width: min(calc(100vw - 24px), 360px);
+  position: relative;
+  padding: 1.25rem 1.1rem 1.1rem;
   background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 15px;
-  gap: 0.6rem;
+  border-radius: 14px;
+  gap: 0.55rem;
+  border: 1px solid #eef0f2;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+  box-sizing: border-box;
+}
+
+.container > img {
+  width: 44px;
+  height: 44px;
 }
 
 .name {
-  font-size: 0.8em;
+  font-size: 0.92rem;
   font-weight: 600;
-  color: #7d7aff;
+  color: #726fe8;
+  text-align: center;
 }
 
 .comment {
   font-weight: 600;
+  color: #111827;
+  text-align: center;
 }
 
 .btnBox {
@@ -33,18 +42,20 @@
 
 .btnBox > button {
   width: 100%;
-  padding: 0.6rem 1.6rem;
+  height: 42px;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .addBtn {
-  background-color: #7d7aff;
-  border: none;
+  background-color: #726fe8;
+  border: 1px solid #726fe8;
   color: white;
+  font-weight: 600;
 }
 
 .cancelBtn {
   background-color: white;
-
-  border: 1px solid #cdd1d5;
+  border: 1px solid #e5e7eb;
+  color: #4b5563;
 }

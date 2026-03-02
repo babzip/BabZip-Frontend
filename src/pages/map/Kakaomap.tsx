@@ -300,8 +300,8 @@ function Kakaomap() {
         )}
       </div>
 
-      <div className={styles.modifyModal}>
-        {isModifyModalOn && selectedMarker ? (
+      {isModifyModalOn && selectedMarker ? (
+        <div className={styles.modifyModal}>
           <>
             <div
               className={styles.modalOverlay}
@@ -332,10 +332,10 @@ function Kakaomap() {
               />
             </div>
           </>
-        ) : (
-          ''
-        )}
-      </div>
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 }

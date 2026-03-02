@@ -119,7 +119,7 @@ const MyRanking = () => {
       </div>
 
       <div className={styles.editIcon} onClick={() => setIsEditMode(true)}>
-        <Pencil size={25} color='#7D7AFF' fill='white' />
+        <Pencil size={25} color='#726fe8' fill='white' />
       </div>
 
       {isEditMode && (
