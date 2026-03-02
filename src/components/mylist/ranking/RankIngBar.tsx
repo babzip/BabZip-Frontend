@@ -5,6 +5,12 @@ import { useNavigate } from 'react-router-dom';
 interface Props extends RankingDataType {
   isEditMode: boolean;
   onClick: () => void;
+  onDragStart: (rankValue: number) => void;
+  onDragOver: (rankValue: number) => void;
+  onDrop: (rankValue: number) => void;
+  onDragEnd: () => void;
+  isDragging: boolean;
+  isDragOver: boolean;
 }
 
 const RankingBar = ({
@@ -13,6 +19,12 @@ const RankingBar = ({
   address,
   isEditMode,
   onClick,
+  onDragStart,
+  onDragOver,
+  onDrop,
+  onDragEnd,
+  isDragging,
+  isDragOver,
 }: Props) => {
   const navigate = useNavigate();
   const mappingRankIcon = (rank: number) => {
@@ -22,7 +34,22 @@ const RankingBar = ({
     else return rank;
   };
   return (
-    <div className={styles.container} onClick={onClick}>
+    <div
+      className={`${styles.container} ${isDragging ? styles.dragging : ''} ${
+        isDragOver ? styles.dragOver : ''
+      }`}
+      onClick={onClick}
+      onDragOver={(e) => {
+        if (!isEditMode) return;
+        e.preventDefault();
+        onDragOver(rankValue);
+      }}
+      onDrop={(e) => {
+        if (!isEditMode) return;
+        e.preventDefault();
+        onDrop(rankValue);
+      }}
+    >
       <div className={styles.ranking}>{mappingRankIcon(rankValue)}</div>
       <div className={styles.info}>
         <div
@@ -52,7 +79,24 @@ const RankingBar = ({
         </div>
       </div>
       <div className={styles.dragable}>
-        {isEditMode ? <img src='/dragable_icon.svg' alt='' /> : ''}
+        {isEditMode ? (
+          <img
+            src='/dragable_icon.svg'
+            alt='drag handle'
+            draggable
+            onClick={(e) => e.stopPropagation()}
+            onDragStart={(e) => {
+              e.stopPropagation();
+              onDragStart(rankValue);
+            }}
+            onDragEnd={(e) => {
+              e.stopPropagation();
+              onDragEnd();
+            }}
+          />
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );

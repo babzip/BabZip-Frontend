@@ -1,8 +1,19 @@
 .container {
   width: 80%;
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-radius: 10px;
+  transition: background-color 0.15s ease, opacity 0.15s ease;
+}
+
+.dragging {
+  opacity: 0.45;
+}
+
+.dragOver {
+  background-color: rgba(125, 122, 255, 0.12);
 }
 
 .ranking {
@@ -36,6 +47,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.dragable > img {
+  cursor: grab;
+}
+
+.dragable > img:active {
+  cursor: grabbing;
 }
 
 .addBtnBox {
