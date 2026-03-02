@@ -27,7 +27,7 @@
 
 .sortingBox {
   padding: 0.4rem 1.2rem;
-  border: 1px solid #111827;
+  border: 1px solid #e5e7eb;
   border-radius: 20px;
   display: flex;
   justify-content: center;
@@ -101,9 +101,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #726fe8;
 }
 
 .selected {
-  background-color: #111827;
+  background-color: #726fe8;
   color: white;
 }
