@@ -1,4 +1,10 @@
-import { useState, type ChangeEvent, type FormEvent } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type FormEvent,
+} from 'react';
 import { Search } from 'lucide-react';
 import axios from 'axios';
 import styles from './searchBar.module.css';
@@ -51,6 +57,7 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
   const [resultOn, setResultOn] = useState<boolean>(false);
   const [isWriteModalOn, setIsWriteModalOn] = useState<boolean>(false);
   const [isModifyModalOn, setIsModifyModalOn] = useState<boolean>(false);
+  const searchAreaRef = useRef<HTMLDivElement | null>(null);
   const [postInfo, setPostInfo] = useState<{
     restaurantName: string;
     address: string;
@@ -134,36 +141,53 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
     }
   };
 
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (!resultOn) return;
+      const target = e.target as Node;
+      if (searchAreaRef.current && !searchAreaRef.current.contains(target)) {
+        setResultOn(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [resultOn]);
+
   return (
     <div className={styles.container}>
-      <form className={styles.searchBar} onSubmit={handleSubmitSearch}>
-        <input
-          type='text'
-          value={value}
-          className={styles.input}
-          placeholder={placeholder}
-          onChange={onChange}
-        />
-        <button type='submit' className={styles.searchBtn} aria-label='검색'>
-          <Search size={18} />
-        </button>
-      </form>
-      <div className={styles.searchResult}>
-        {resultOn &&
-          (searchResult.length > 0 ? (
-            searchResult.map((ele) => (
-              <div
-                key={ele.id}
-                className={styles.element}
-                onClick={() => handleSelectData(ele)}
-              >
-                {ele.place_name}
-                <span className={styles.subAddress}>{ele.address_name}</span>
-              </div>
-            ))
-          ) : (
-            <div className={styles.element}>검색 결과가 없습니다.</div>
-          ))}
+      <div className={styles.searchArea} ref={searchAreaRef}>
+        <form className={styles.searchBar} onSubmit={handleSubmitSearch}>
+          <input
+            type='text'
+            value={value}
+            className={styles.input}
+            placeholder={placeholder}
+            onChange={onChange}
+          />
+          <button type='submit' className={styles.searchBtn} aria-label='검색'>
+            <Search size={18} />
+          </button>
+        </form>
+        <div className={styles.searchResult}>
+          {resultOn &&
+            (searchResult.length > 0 ? (
+              searchResult.map((ele) => (
+                <div
+                  key={ele.id}
+                  className={styles.element}
+                  onClick={() => handleSelectData(ele)}
+                >
+                  {ele.place_name}
+                  <span className={styles.subAddress}>{ele.address_name}</span>
+                </div>
+              ))
+            ) : (
+              <div className={styles.element}>검색 결과가 없습니다.</div>
+            ))}
+        </div>
       </div>
       <div className={styles.modal}>
         {isModalOn && (
