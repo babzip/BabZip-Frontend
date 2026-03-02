@@ -1,6 +1,6 @@
 .container {
   width: 100%;
-  min-height: 70vh;
+  min-height: 60vh;
   position: relative;
   background-color: #ffffff;
   border-radius: 18px 18px 0 0;
@@ -62,17 +62,15 @@
 
 .starReview {
   width: 100%;
-  min-height: 56px;
-  padding: 0.4rem 0.7rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  background-color: #ffffff;
+  min-height: 40px;
+  padding: 0.1rem 0;
   display: flex;
   align-items: center;
 }
 
 .memo {
   width: 100%;
+  max-width: 100%;
   min-height: 160px;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
@@ -83,6 +81,10 @@
   font-size: 0.92rem;
   line-height: 1.5;
   outline: none;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .memo:focus {
@@ -104,6 +106,7 @@
   cursor: pointer;
   font-weight: 700;
   font-size: 0.95rem;
+  padding: 10px 0;
 }
 
 .modal {
