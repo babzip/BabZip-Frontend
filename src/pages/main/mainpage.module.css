@@ -56,11 +56,12 @@
   justify-content: center;
   align-items: center;
   background-color: white;
-  border: 1px solid #726fe8;
+  border: 1px solid #e5e7eb;
   border-radius: 12px;
   box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
   pointer-events: auto;
   overflow: hidden;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .zoom > div {
@@ -72,10 +73,17 @@
   pointer-events: auto;
   z-index: 100;
   color: #4b5563;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .zoom > div + div {
-  border-top: 1px solid #d9d8fb;
+  border-top: 1px solid #f1f3f5;
+}
+
+.zoom > div:hover {
+  background-color: #f8fafc;
+  color: #111827;
 }
 
 .focusBtn {
@@ -86,7 +94,16 @@
   justify-content: center;
   align-items: center;
   background-color: white;
-  border: 1px solid #726fe8;
+  border: 1px solid #e5e7eb;
   color: #4b5563;
   box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.focusBtn:hover {
+  background-color: #f8fafc;
+  color: #111827;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
 }

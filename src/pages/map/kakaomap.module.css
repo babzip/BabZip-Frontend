@@ -41,6 +41,7 @@
   z-index: 1004;
   position: absolute;
   bottom: 0;
+  animation: mapSheetIn 0.24s ease-out;
 }
 
 .modalOverlay {
@@ -52,6 +53,7 @@
   background-color: rgba(15, 23, 42, 0.24);
   backdrop-filter: blur(1px);
   z-index: 1;
+  animation: mapOverlayIn 0.2s ease-out;
 }
 
 .modifyModal {
@@ -69,4 +71,25 @@
   position: relative;
   z-index: 2;
   width: 100%;
+  animation: mapSheetIn 0.24s ease-out;
+}
+
+@keyframes mapOverlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes mapSheetIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
