@@ -73,23 +73,31 @@
   width: 100%;
   max-width: 100%;
   min-height: 160px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #d9d8fb;
   border-radius: 12px;
-  background-color: #f8fafc;
-  padding: 0.95rem;
-  color: #111827;
+  background-color: #fbfbff;
+  padding: 0.95rem 1rem;
+  color: #1f2937;
   resize: none;
   font-size: 0.92rem;
-  line-height: 1.5;
+  line-height: 1.6;
   outline: none;
   box-sizing: border-box;
   overflow-x: hidden;
   word-break: break-word;
   overflow-wrap: anywhere;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.memo::placeholder {
+  color: #9aa0ae;
 }
 
 .memo:focus {
-  border-color: #c9cbf8;
+  border-color: #726fe8;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(114, 111, 232, 0.14);
 }
 
 .footer {
