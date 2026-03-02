@@ -28,3 +28,26 @@
 
   pointer-events: none;
 }
+
+.infoWindow {
+  min-width: 180px;
+  max-width: 240px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e6e8ec;
+  background-color: #fff;
+  box-shadow: 0 8px 24px rgba(17, 24, 39, 0.12);
+}
+
+.infoTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.infoAddress {
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #4b5563;
+}

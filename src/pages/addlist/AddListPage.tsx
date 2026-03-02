@@ -1,5 +1,5 @@
 import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import AcceptModal from '../../components/addlist/AcceptModal';
@@ -19,7 +19,7 @@ function AddListPage() {
   const [sortOption, setSortOption] = useState<'latest' | 'rating'>('latest');
   const location = useLocation();
   const accessToken = localStorage.getItem('accessToken');
-  const rank = location.state.rankValue;
+  const rank = location.state?.rankValue ?? 1;
   const [allData, setAllData] = useState<EateryHistoryBarType[]>([]);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [selectedValue, setSelectedValue] = useState<{
@@ -41,7 +41,7 @@ function AddListPage() {
     if (option === 'rating') return '별점순';
   };
 
-  const getAllData = async () => {
+  const getAllData = useCallback(async () => {
     try {
       const response = await axios.get(
         `${apiUrl}/guestbook/me?page=${
@@ -57,15 +57,11 @@ function AddListPage() {
     } catch (err) {
       console.error(err);
     }
-  };
-
-  useEffect(() => {
-    console.log('rank:', rank);
-  }, []);
+  }, [accessToken, apiUrl, selectedPage, sortOption]);
 
   useEffect(() => {
     getAllData();
-  }, [selectedPage, sortOption]);
+  }, [getAllData]);
 
   return (
     <div className={styles.container}>
@@ -85,7 +81,7 @@ function AddListPage() {
       <SearchBar
         value={searchValue}
         placeholder='식당명을 입력해보세요.'
-        onChange={() => setSearchValue}
+        onChange={(e) => setSearchValue(e.currentTarget.value)}
       />
       <div className={styles.barBox}>
         {allData.map((ele) => (

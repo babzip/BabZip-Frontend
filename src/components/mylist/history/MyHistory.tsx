@@ -1,5 +1,5 @@
 import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import EateryHistoryBar from './EateryHistoryBar';
 import type { EateryHistoryBarType } from './EateryHistoryBar';
@@ -32,7 +32,7 @@ const MyHistory = () => {
     ele.restaurantName.toLowerCase().includes(searchValue.toLowerCase())
   );
 
-  const getAllDate = async () => {
+  const getAllDate = useCallback(async () => {
     try {
       const response = await axios.get(
         `${apiUrl}/guestbook/me?page=${
@@ -48,11 +48,11 @@ const MyHistory = () => {
     } catch (err) {
       console.error(err);
     }
-  };
+  }, [accessToken, apiUrl, selectedPage, sortOption]);
 
   useEffect(() => {
     getAllDate();
-  }, [selectedPage, sortOption]);
+  }, [getAllDate]);
 
   return (
     <div className={styles.container}>

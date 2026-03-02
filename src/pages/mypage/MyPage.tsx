@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { ChevronRight } from 'lucide-react';
 import Header from '../../components/mypage/Header';
@@ -13,14 +13,14 @@ function MyPage() {
     name: string;
     picture: string;
     provider: string;
-    restauranCount: string;
+    restaurantCount: number;
     averageRating: number;
   }>();
   const { logout } = useAuthStore();
   const navigate = useNavigate();
 
   const accessToken = localStorage.getItem('accessToken');
-  const getMyInfo = async () => {
+  const getMyInfo = useCallback(async () => {
     try {
       const response = await axios.get(`${apiUrl}/user/me`, {
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -30,7 +30,7 @@ function MyPage() {
     } catch (err) {
       console.error(err);
     }
-  };
+  }, [accessToken, apiUrl]);
 
   const handleLogout = async () => {
     try {
@@ -49,7 +49,7 @@ function MyPage() {
 
   useEffect(() => {
     getMyInfo();
-  }, []);
+  }, [getMyInfo]);
 
   return (
     <div className={styles.container}>
@@ -67,7 +67,7 @@ function MyPage() {
       <div className={styles.info}>
         <div className={styles.numOfFoods}>
           <div>등록한 음식점 개수</div>
-          <div className={styles.data}>{userInfo?.restauranCount}</div>
+          <div className={styles.data}>{userInfo?.restaurantCount}</div>
         </div>
         <div className={styles.rating}>
           <div>평균 별점</div>

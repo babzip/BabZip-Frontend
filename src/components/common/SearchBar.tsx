@@ -213,6 +213,10 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
                     id: selectedData.id,
                     lat: +selectedData.y,
                     lng: +selectedData.x,
+                    placeName: selectedData.place_name,
+                    address:
+                      selectedData.road_address_name || selectedData.address_name,
+                    placeUrl: selectedData.place_url,
                   });
                 }}
                 address={selectedData.address_name}

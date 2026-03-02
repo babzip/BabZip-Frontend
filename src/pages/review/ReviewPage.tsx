@@ -35,7 +35,7 @@ const ReviewPage = ({
   useEffect(() => {
     setValue(initialContent ?? '');
     setRating(initialRating ?? 0);
-  }, []);
+  }, [initialContent, initialRating]);
 
   const handleWrite = async () => {
     const body = {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import DeleteModal from '../../addlist/DeleteModal';
 import { Pencil } from 'lucide-react';
@@ -15,7 +15,6 @@ const MyRanking = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isDeleteModalOn, setIsDeleteModalOn] = useState(false);
   const [selectedRank, setSelectedRank] = useState(0);
-  const [isInitialized, setIsInitialized] = useState(false);
   const [originalRankData, setOriginalRankData] = useState<RankingDataType[]>(
     []
   );
@@ -24,7 +23,7 @@ const MyRanking = () => {
   const { setRankData, clearRank } = useTop10Store();
   const rankData = useTop10Store((state) => state.rankData);
 
-  const getTop10Data = async () => {
+  const getTop10Data = useCallback(async () => {
     try {
       const res = await axios.get(`${apiUrl}/top10`, {
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -34,7 +33,7 @@ const MyRanking = () => {
     } catch (err) {
       console.error('[top10 get 에러] :', err);
     }
-  };
+  }, [accessToken, apiUrl, setRankData]);
 
   const editTop10Data = async (data: RankingDataType[]) => {
     try {
@@ -53,11 +52,8 @@ const MyRanking = () => {
   };
 
   useEffect(() => {
-    getTop10Data().then(() => {
-      console.log(isInitialized);
-      setIsInitialized(true);
-    });
-  }, []);
+    getTop10Data();
+  }, [getTop10Data]);
 
   return (
     <div className={styles.container}>

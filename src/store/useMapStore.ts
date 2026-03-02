@@ -4,6 +4,9 @@ type MarkerType = {
   lat: number;
   lng: number;
   id: string;
+  placeName?: string;
+  address?: string;
+  placeUrl?: string;
 };
 
 type MapStore = {
