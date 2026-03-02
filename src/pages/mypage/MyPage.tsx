@@ -19,24 +19,19 @@ function MyPage() {
   const { logout } = useAuthStore();
   const navigate = useNavigate();
 
-  const accessToken = localStorage.getItem('accessToken');
   const getMyInfo = useCallback(async () => {
     try {
-      const response = await axios.get(`${apiUrl}/user/me`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
+      const response = await axios.get(`${apiUrl}/user/me`);
       console.log(response.data.data);
       setUserInfo(response.data.data);
     } catch (err) {
       console.error(err);
     }
-  }, [accessToken, apiUrl]);
+  }, [apiUrl]);
 
   const handleLogout = async () => {
     try {
-      const response = await axios.delete(`${apiUrl}/user/logout`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
+      const response = await axios.delete(`${apiUrl}/user/logout`);
       console.log(response.data);
       logout();
       localStorage.removeItem('accessToken');
@@ -93,7 +88,11 @@ function MyPage() {
         </div>
         <div
           className={styles.quit}
-          onClick={() => console.log('어딜나가잉 시져시져')}
+          onClick={() =>
+            alert(
+              '아직 지원하지 않는 기능입니다. sksmsalsndi@gmail.com으로 문의주세요.'
+            )
+          }
         >
           회원 탈퇴
         </div>
