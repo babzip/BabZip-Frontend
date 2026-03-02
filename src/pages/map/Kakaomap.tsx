@@ -39,16 +39,28 @@ function Kakaomap() {
   });
 
   useEffect(() => {
-    if (window.kakao && window.kakao.maps) {
-      setLoaded(true);
-    } else {
-      const id = setInterval(() => {
-        if (window.kakao && window.kakao.maps) {
-          setLoaded(true);
+    let id: ReturnType<typeof setInterval> | null = null;
+
+    const tryInitKakao = () => {
+      if (!(window.kakao && window.kakao.maps)) return false;
+
+      window.kakao.maps.load(() => {
+        setLoaded(true);
+      });
+      return true;
+    };
+
+    if (!tryInitKakao()) {
+      id = setInterval(() => {
+        if (tryInitKakao() && id) {
           clearInterval(id);
         }
       }, 50);
     }
+
+    return () => {
+      if (id) clearInterval(id);
+    };
   }, []);
 
   useEffect(() => {
@@ -72,10 +84,15 @@ function Kakaomap() {
 
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) return;
+    const services = window.kakao?.maps?.services;
+    if (!services?.Geocoder) {
+      console.error('[마커 초기화 에러] Kakao services.Geocoder is not ready');
+      return;
+    }
 
     let isCancelled = false;
 
-    const geocoder = new window.kakao.maps.services.Geocoder();
+    const geocoder = new services.Geocoder();
     const geocodeAddress = (address: string) =>
       new Promise<Lating | null>((resolve) => {
         if (!address) {
@@ -85,7 +102,7 @@ function Kakaomap() {
 
         geocoder.addressSearch(address, (result, status) => {
           if (
-            status === window.kakao.maps.services.Status.OK &&
+            status === services.Status.OK &&
             result.length > 0
           ) {
             resolve({
