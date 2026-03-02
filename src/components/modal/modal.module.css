@@ -15,7 +15,7 @@
   height: 42px;
   background-color: #726fe8;
   color: white;
-  border: 1px solid #726fe8;
+  border: none;
   border-radius: 10px;
   font-weight: bold;
   cursor: pointer;
@@ -48,7 +48,7 @@
   position: relative;
   border-radius: 14px;
   padding: 1.15rem;
-  border: 1px solid #726fe8;
+  border: 1px solid #eef0f2;
   box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
   box-sizing: border-box;
   animation: popupIn 0.2s ease-out;

@@ -27,7 +27,7 @@
 
 .sortingBox {
   padding: 0.4rem 1.2rem;
-  border: 1px solid #726fe8;
+  border: 1px solid #111827;
   border-radius: 20px;
   display: flex;
   justify-content: center;
@@ -50,7 +50,7 @@
   height: 100%;
   background-color: rgba(15, 23, 42, 0.24);
   backdrop-filter: blur(1px);
-  z-index: 100;
+  z-index: 1300;
   animation: myHistoryOverlayIn 0.2s ease-out;
 }
 
@@ -59,7 +59,7 @@
   bottom: 0;
   width: 100%;
   background-color: white;
-  z-index: 101;
+  z-index: 1301;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
   animation: myHistorySheetIn 0.24s ease-out;
@@ -104,6 +104,6 @@
 }
 
 .selected {
-  background-color: #726fe8;
+  background-color: #111827;
   color: white;
 }
