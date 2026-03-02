@@ -2,13 +2,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 import { useAuthStore } from '../../store/useAuthStore';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 function OAuthRedirectPage() {
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate();
   const location = useLocation();
-  const handleMyInfo = async (accessToken: string) => {
+  const handleMyInfo = useCallback(async (accessToken: string) => {
     try {
       const response = await axios.get(`${apiUrl}/user/me`, {
         headers: {
@@ -31,7 +31,7 @@ function OAuthRedirectPage() {
       console.error('[사용자 정보 요청 실패]', error);
       navigate('/login');
     }
-  };
+  }, [apiUrl, navigate]);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -46,12 +46,10 @@ function OAuthRedirectPage() {
         isLoggedIn: true,
       });
       handleMyInfo(accessToken);
-
-      navigate('/', { replace: true });
     } else {
       console.error('토큰 없음');
     }
-  }, [location, navigate]);
+  }, [handleMyInfo, location.search]);
 
   return <div>로그인 중입니다...</div>;
 }

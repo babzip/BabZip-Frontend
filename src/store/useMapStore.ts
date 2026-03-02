@@ -1,9 +1,15 @@
 import { create } from 'zustand';
 
-type MarkerType = {
+export type MarkerType = {
   lat: number;
   lng: number;
   id: string;
+  placeName?: string;
+  address?: string;
+  placeUrl?: string;
+  rating?: number;
+  content?: string;
+  createdAt?: string | Date;
 };
 
 type MapStore = {

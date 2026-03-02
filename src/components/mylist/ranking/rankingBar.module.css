@@ -1,8 +1,19 @@
 .container {
   width: 80%;
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-radius: 10px;
+  transition: background-color 0.15s ease, opacity 0.15s ease;
+}
+
+.dragging {
+  opacity: 0.45;
+}
+
+.dragOver {
+  background-color: rgba(17, 24, 39, 0.08);
 }
 
 .ranking {
@@ -38,6 +49,14 @@
   align-items: center;
 }
 
+.dragable > img {
+  cursor: grab;
+}
+
+.dragable > img:active {
+  cursor: grabbing;
+}
+
 .addBtnBox {
   width: 100%;
   display: flex;
@@ -46,9 +65,11 @@
 }
 
 .addBtnBox > button {
-  background-color: #d9d9d9;
-  padding: 0.4rem 2rem;
-  border-radius: 15px;
-  color: white;
-  border: none;
+  background-color: #ffffff;
+  height: 36px;
+  padding: 0 1.2rem;
+  border-radius: 10px;
+  color: #4b5563;
+  border: 1px solid #111827;
+  font-weight: 600;
 }

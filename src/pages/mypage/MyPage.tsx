@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { ChevronRight } from 'lucide-react';
 import Header from '../../components/mypage/Header';
@@ -13,30 +13,25 @@ function MyPage() {
     name: string;
     picture: string;
     provider: string;
-    restauranCount: string;
+    restaurantCount: number;
     averageRating: number;
   }>();
   const { logout } = useAuthStore();
   const navigate = useNavigate();
 
-  const accessToken = localStorage.getItem('accessToken');
-  const getMyInfo = async () => {
+  const getMyInfo = useCallback(async () => {
     try {
-      const response = await axios.get(`${apiUrl}/user/me`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
+      const response = await axios.get(`${apiUrl}/user/me`);
       console.log(response.data.data);
       setUserInfo(response.data.data);
     } catch (err) {
       console.error(err);
     }
-  };
+  }, [apiUrl]);
 
   const handleLogout = async () => {
     try {
-      const response = await axios.delete(`${apiUrl}/user/logout`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
+      const response = await axios.delete(`${apiUrl}/user/logout`);
       console.log(response.data);
       logout();
       localStorage.removeItem('accessToken');
@@ -49,7 +44,7 @@ function MyPage() {
 
   useEffect(() => {
     getMyInfo();
-  }, []);
+  }, [getMyInfo]);
 
   return (
     <div className={styles.container}>
@@ -67,7 +62,7 @@ function MyPage() {
       <div className={styles.info}>
         <div className={styles.numOfFoods}>
           <div>등록한 음식점 개수</div>
-          <div className={styles.data}>{userInfo?.restauranCount}</div>
+          <div className={styles.data}>{userInfo?.restaurantCount}</div>
         </div>
         <div className={styles.rating}>
           <div>평균 별점</div>
@@ -93,7 +88,11 @@ function MyPage() {
         </div>
         <div
           className={styles.quit}
-          onClick={() => console.log('어딜나가잉 시져시져')}
+          onClick={() =>
+            alert(
+              '아직 지원하지 않는 기능입니다. sksmsalsndi@gmail.com으로 문의주세요.'
+            )
+          }
         >
           회원 탈퇴
         </div>

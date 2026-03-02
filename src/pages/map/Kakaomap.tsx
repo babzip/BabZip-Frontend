@@ -1,19 +1,41 @@
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 
 import { Outlet } from 'react-router-dom';
+import ReviewPage from '../review/ReviewPage';
+import VisitedEatery from '../../components/eatery/VisitedEatery';
 import styles from './kakaomap.module.css';
 import { useLocationStore } from '../../store/useLocationStore';
-import { useMapStore } from '../../store/useMapStore';
+import { useMapStore, type MarkerType } from '../../store/useMapStore';
 
 type Lating = {
   lat: number;
   lng: number;
 };
 
+type GuestbookItem = {
+  kakaoPlaceId: string;
+  restaurantName: string;
+  address: string;
+  rating: number;
+  content: string;
+  createdAt: string;
+  placeUrl?: string;
+  lat?: number;
+  lng?: number;
+  latitude?: number;
+  longitude?: number;
+};
+
 function Kakaomap() {
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const [loaded, setLoaded] = useState(false);
-  const { center, marker } = useMapStore();
+  const [selectedMarker, setSelectedMarker] = useState<MarkerType | null>(null);
+  const [isModalOn, setIsModalOn] = useState(false);
+  const [isModifyModalOn, setIsModifyModalOn] = useState(false);
+  const { center, marker, markerList, addMarker, removeMarker, clearMarkers } =
+    useMapStore();
   const localMapRef = useRef<kakao.maps.Map | null>(null);
   const isSet = useRef(false);
   const setMapRef = useMapStore((state) => state.setMapRef);
@@ -23,19 +45,30 @@ function Kakaomap() {
     lat: 33.450701,
     lng: 126.570667,
   });
-  const { markerList } = useMapStore();
 
   useEffect(() => {
-    if (window.kakao && window.kakao.maps) {
-      setLoaded(true);
-    } else {
-      const id = setInterval(() => {
-        if (window.kakao && window.kakao.maps) {
-          setLoaded(true);
+    let id: ReturnType<typeof setInterval> | null = null;
+
+    const tryInitKakao = () => {
+      if (!(window.kakao && window.kakao.maps)) return false;
+
+      window.kakao.maps.load(() => {
+        setLoaded(true);
+      });
+      return true;
+    };
+
+    if (!tryInitKakao()) {
+      id = setInterval(() => {
+        if (tryInitKakao() && id) {
           clearInterval(id);
         }
       }, 50);
     }
+
+    return () => {
+      if (id) clearInterval(id);
+    };
   }, []);
 
   useEffect(() => {
@@ -53,6 +86,131 @@ function Kakaomap() {
 
     return () => navigator.geolocation.clearWatch(watcher);
   }, [setLocation]);
+
+  const loadRatedMarkers = useCallback(async () => {
+    if (!loaded) return;
+
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) return;
+    const services = window.kakao?.maps?.services;
+    if (!services?.Geocoder) {
+      console.error('[마커 초기화 에러] Kakao services.Geocoder is not ready');
+      return;
+    }
+
+    const geocoder = new services.Geocoder();
+    const geocodeAddress = (address: string) =>
+      new Promise<Lating | null>((resolve) => {
+        if (!address) {
+          resolve(null);
+          return;
+        }
+
+        geocoder.addressSearch(address, (result, status) => {
+          if (
+            status === services.Status.OK &&
+            result.length > 0
+          ) {
+            resolve({
+              lat: Number(result[0].y),
+              lng: Number(result[0].x),
+            });
+            return;
+          }
+          resolve(null);
+        });
+      });
+
+    try {
+      const allGuestbooks: GuestbookItem[] = [];
+      let page = 0;
+      let totalPages = 1;
+
+      while (page < totalPages) {
+        const response = await axios.get(
+          `${apiUrl}/guestbook/me?page=${page}&sort=createdAt,DESC`,
+          {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          }
+        );
+
+        const data = response.data?.data;
+        const content = (data?.content ?? []) as GuestbookItem[];
+        totalPages = data?.totalPages ?? page + 1;
+
+        allGuestbooks.push(...content);
+        page += 1;
+      }
+
+      const ratedGuestbooks = allGuestbooks.filter((item) => item.rating > 0);
+
+      const markers = await Promise.all(
+        ratedGuestbooks.map(async (item) => {
+          const lat = item.lat ?? item.latitude;
+          const lng = item.lng ?? item.longitude;
+
+          if (typeof lat === 'number' && typeof lng === 'number') {
+            return {
+              id: item.kakaoPlaceId,
+              lat,
+              lng,
+              placeName: item.restaurantName,
+              address: item.address,
+              rating: item.rating,
+              content: item.content,
+              createdAt: item.createdAt,
+              placeUrl: item.placeUrl,
+            };
+          }
+
+          const geocoded = await geocodeAddress(item.address);
+          if (!geocoded) return null;
+
+          return {
+            id: item.kakaoPlaceId,
+            lat: geocoded.lat,
+            lng: geocoded.lng,
+            placeName: item.restaurantName,
+            address: item.address,
+            rating: item.rating,
+            content: item.content,
+            createdAt: item.createdAt,
+            placeUrl: item.placeUrl,
+          };
+        })
+      );
+
+      clearMarkers();
+      markers
+        .filter((item): item is NonNullable<typeof item> => item !== null)
+        .forEach((item) => addMarker(item));
+    } catch (err) {
+      console.error('[마커 초기화 에러] :', err);
+    }
+  }, [addMarker, apiUrl, clearMarkers, loaded]);
+
+  useEffect(() => {
+    loadRatedMarkers();
+  }, [loadRatedMarkers]);
+
+  const handleDeleteGuestbook = async () => {
+    if (!selectedMarker) return;
+
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) return;
+
+    try {
+      await axios.delete(`${apiUrl}/guestbook/${selectedMarker.id}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      removeMarker(selectedMarker.id);
+      setIsModalOn(false);
+      setIsModifyModalOn(false);
+      setSelectedMarker(null);
+    } catch (err) {
+      console.error('[방명록 삭제 에러] :', err);
+    }
+  };
 
   if (!loaded) return <div>지도 로딩 중...</div>;
 
@@ -78,6 +236,10 @@ function Kakaomap() {
               src: '/location_marker.svg',
               size: { width: 30, height: 30 },
             }}
+            onClick={() => {
+              setSelectedMarker(marker);
+              setIsModalOn(true);
+            }}
           />
         ))}
 
@@ -102,6 +264,77 @@ function Kakaomap() {
       <div className={styles.content}>
         <Outlet />
       </div>
+
+      <div className={styles.modalRoot}>
+        {isModalOn && selectedMarker && (
+          <>
+            <div
+              className={styles.modalOverlay}
+              onClick={() => {
+                setIsModalOn(false);
+                setSelectedMarker(null);
+              }}
+            />
+            <div className={styles.modal}>
+              <VisitedEatery
+                restaurentName={selectedMarker.placeName ?? '가게 정보'}
+                location={selectedMarker.address ?? ''}
+                visitedDate={
+                  selectedMarker.createdAt
+                    ? new Date(selectedMarker.createdAt)
+                    : new Date()
+                }
+                visited={true}
+                textContent={selectedMarker.content ?? ''}
+                rating={selectedMarker.rating ?? 0}
+                onAddClicked={() => {}}
+                onModifyClicked={() => {
+                  setIsModalOn(false);
+                  setIsModifyModalOn(true);
+                }}
+                onDeleteClicked={handleDeleteGuestbook}
+              />
+            </div>
+          </>
+        )}
+      </div>
+
+      {isModifyModalOn && selectedMarker ? (
+        <div className={styles.modifyModal}>
+          <>
+            <div
+              className={styles.modalOverlay}
+              onClick={() => {
+                setIsModifyModalOn(false);
+                setSelectedMarker(null);
+              }}
+            />
+            <div className={styles.modifyModalContent}>
+              <ReviewPage
+                initialContent={selectedMarker.content}
+                initialRating={selectedMarker.rating}
+                closeModal={() => {
+                  setIsModifyModalOn(false);
+                  setSelectedMarker(null);
+                }}
+                onReviewSubmitted={() => {
+                  loadRatedMarkers();
+                }}
+                address={selectedMarker.address ?? ''}
+                kakaoPlaceId={selectedMarker.id}
+                name={selectedMarker.placeName ?? ''}
+                visitedDate={
+                  selectedMarker.createdAt
+                    ? new Date(selectedMarker.createdAt)
+                    : new Date()
+                }
+              />
+            </div>
+          </>
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 }

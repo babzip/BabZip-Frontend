@@ -27,7 +27,7 @@
 
 .sortingBox {
   padding: 0.4rem 1.2rem;
-  border: 1px solid #cdd1d5;
+  border: 1px solid #726fe8;
   border-radius: 20px;
   display: flex;
   justify-content: center;
@@ -42,8 +42,10 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-  z-index: 100;
+  background-color: rgba(15, 23, 42, 0.24);
+  backdrop-filter: blur(1px);
+  z-index: 1300;
+  animation: addListOverlayIn 0.2s ease-out;
 }
 
 .modalArea {
@@ -51,9 +53,10 @@
   bottom: 0;
   width: 100%;
   background-color: white;
-  z-index: 101;
+  z-index: 1301;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
+  animation: addListSheetIn 0.24s ease-out;
 }
 
 .pageBar {
@@ -75,7 +78,7 @@
 }
 
 .selected {
-  background-color: #7d7aff;
+  background-color: #726fe8;
   color: white;
 }
 
@@ -89,11 +92,12 @@
 
 .cancelBtn > button {
   width: 70%;
-  padding: 0.5rem;
-  background-color: #7d7aff;
+  height: 42px;
+  background-color: #726fe8;
   color: white;
-  border: none;
-  border-radius: 8px;
+  border: 1px solid #726fe8;
+  border-radius: 10px;
+  font-weight: 600;
 }
 
 .modal {
@@ -101,7 +105,28 @@
   bottom: 0;
   width: 100%;
   background-color: white;
-  z-index: 102;
+  z-index: 1302;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
+  animation: addListSheetIn 0.24s ease-out;
+}
+
+@keyframes addListOverlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes addListSheetIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

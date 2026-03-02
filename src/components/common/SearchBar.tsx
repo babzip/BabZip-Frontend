@@ -1,4 +1,10 @@
-import { useState, type ChangeEvent } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type FormEvent,
+} from 'react';
 import { Search } from 'lucide-react';
 import axios from 'axios';
 import styles from './searchBar.module.css';
@@ -51,6 +57,7 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
   const [resultOn, setResultOn] = useState<boolean>(false);
   const [isWriteModalOn, setIsWriteModalOn] = useState<boolean>(false);
   const [isModifyModalOn, setIsModifyModalOn] = useState<boolean>(false);
+  const searchAreaRef = useRef<HTMLDivElement | null>(null);
   const [postInfo, setPostInfo] = useState<{
     restaurantName: string;
     address: string;
@@ -81,6 +88,11 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
   };
 
   const handleSearch = async (val: string, x: number, y: number) => {
+    if (!val.trim()) {
+      setResultOn(false);
+      return;
+    }
+
     const body = {
       query: val,
       x: x,
@@ -97,6 +109,11 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const handleSubmitSearch = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await handleSearch(value, lng, lat);
   };
 
   const handleSelectData = async (ele: searchResultType) => {
@@ -124,34 +141,53 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
     }
   };
 
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (!resultOn) return;
+      const target = e.target as Node;
+      if (searchAreaRef.current && !searchAreaRef.current.contains(target)) {
+        setResultOn(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [resultOn]);
+
   return (
     <div className={styles.container}>
-      <div className={styles.searchBar}>
-        <input
-          type='text'
-          value={value}
-          className={styles.input}
-          placeholder={placeholder}
-          onChange={onChange}
-        />
-        <Search onClick={() => handleSearch(value, lng, lat)} color='#7d7aff' />
-      </div>
-      <div className={styles.searchResult}>
-        {resultOn &&
-          (searchResult.length > 0 ? (
-            searchResult.map((ele) => (
-              <div
-                key={ele.id}
-                className={styles.element}
-                onClick={() => handleSelectData(ele)}
-              >
-                {ele.place_name}
-                <span className={styles.subAddress}>{ele.address_name}</span>
-              </div>
-            ))
-          ) : (
-            <div className={styles.element}>검색 결과가 없습니다.</div>
-          ))}
+      <div className={styles.searchArea} ref={searchAreaRef}>
+        <form className={styles.searchBar} onSubmit={handleSubmitSearch}>
+          <input
+            type='text'
+            value={value}
+            className={styles.input}
+            placeholder={placeholder}
+            onChange={onChange}
+          />
+          <button type='submit' className={styles.searchBtn} aria-label='검색'>
+            <Search size={18} />
+          </button>
+        </form>
+        <div className={styles.searchResult}>
+          {resultOn &&
+            (searchResult.length > 0 ? (
+              searchResult.map((ele) => (
+                <div
+                  key={ele.id}
+                  className={styles.element}
+                  onClick={() => handleSelectData(ele)}
+                >
+                  {ele.place_name}
+                  <span className={styles.subAddress}>{ele.address_name}</span>
+                </div>
+              ))
+            ) : (
+              <div className={styles.element}>검색 결과가 없습니다.</div>
+            ))}
+        </div>
       </div>
       <div className={styles.modal}>
         {isModalOn && (
@@ -166,7 +202,6 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
             />
             <div className={styles.modal}>
               <VisitedEatery
-                shareUrl={selectedData.place_url}
                 onModifyClicked={() => {
                   setIsModalOn(false);
                   setIsModifyModalOn(true);
@@ -213,6 +248,10 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
                     id: selectedData.id,
                     lat: +selectedData.y,
                     lng: +selectedData.x,
+                    placeName: selectedData.place_name,
+                    address:
+                      selectedData.road_address_name || selectedData.address_name,
+                    placeUrl: selectedData.place_url,
                   });
                 }}
                 address={selectedData.address_name}
@@ -224,25 +263,37 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
           </>
         )}
       </div>
-      <div className={styles.modifyModal}>
-        {isModifyModalOn ? (
-          <ReviewPage
-            initialContent={postInfo?.content}
-            initialRating={postInfo?.rating}
-            closeModal={() => {
-              setIsModifyModalOn(false);
-              setMarker(null);
-              setCenter(lat, lng);
-            }}
-            address={postInfo?.address ?? ''}
-            kakaoPlaceId={selectedData.id}
-            name={postInfo?.restaurantName ?? ''}
-            visitedDate={new Date(postInfo?.createdAt ?? new Date())}
-          />
-        ) : (
-          ''
-        )}
-      </div>
+      {isModifyModalOn ? (
+        <div className={styles.modifyModal}>
+          <>
+            <div
+              className={styles.modalOverlay}
+              onClick={() => {
+                setIsModifyModalOn(false);
+                setMarker(null);
+                setCenter(lat, lng);
+              }}
+            />
+            <div className={styles.modifyModalContent}>
+              <ReviewPage
+                initialContent={postInfo?.content}
+                initialRating={postInfo?.rating}
+                closeModal={() => {
+                  setIsModifyModalOn(false);
+                  setMarker(null);
+                  setCenter(lat, lng);
+                }}
+                address={postInfo?.address ?? ''}
+                kakaoPlaceId={selectedData.id}
+                name={postInfo?.restaurantName ?? ''}
+                visitedDate={new Date(postInfo?.createdAt ?? new Date())}
+              />
+            </div>
+          </>
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 };

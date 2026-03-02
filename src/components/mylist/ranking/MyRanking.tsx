@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import DeleteModal from '../../addlist/DeleteModal';
 import { Pencil } from 'lucide-react';
@@ -15,7 +15,8 @@ const MyRanking = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isDeleteModalOn, setIsDeleteModalOn] = useState(false);
   const [selectedRank, setSelectedRank] = useState(0);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const [draggingRank, setDraggingRank] = useState<number | null>(null);
+  const [dragOverRank, setDragOverRank] = useState<number | null>(null);
   const [originalRankData, setOriginalRankData] = useState<RankingDataType[]>(
     []
   );
@@ -24,7 +25,7 @@ const MyRanking = () => {
   const { setRankData, clearRank } = useTop10Store();
   const rankData = useTop10Store((state) => state.rankData);
 
-  const getTop10Data = async () => {
+  const getTop10Data = useCallback(async () => {
     try {
       const res = await axios.get(`${apiUrl}/top10`, {
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -34,7 +35,7 @@ const MyRanking = () => {
     } catch (err) {
       console.error('[top10 get 에러] :', err);
     }
-  };
+  }, [accessToken, apiUrl, setRankData]);
 
   const editTop10Data = async (data: RankingDataType[]) => {
     try {
@@ -52,12 +53,26 @@ const MyRanking = () => {
     return JSON.stringify(a) !== JSON.stringify(b);
   };
 
+  const moveRank = (fromRank: number, toRank: number) => {
+    const fromIndex = rankData.findIndex((item) => item.rankValue === fromRank);
+    const toIndex = rankData.findIndex((item) => item.rankValue === toRank);
+
+    if (fromIndex < 0 || toIndex < 0 || fromIndex === toIndex) return;
+
+    const copied = [...rankData];
+    const [moved] = copied.splice(fromIndex, 1);
+    copied.splice(toIndex, 0, moved);
+
+    const reRanked = copied.map((item, idx) => ({
+      ...item,
+      rankValue: idx + 1,
+    }));
+    setRankData(reRanked);
+  };
+
   useEffect(() => {
-    getTop10Data().then(() => {
-      console.log(isInitialized);
-      setIsInitialized(true);
-    });
-  }, []);
+    getTop10Data();
+  }, [getTop10Data]);
 
   return (
     <div className={styles.container}>
@@ -71,6 +86,26 @@ const MyRanking = () => {
             key={idx}
             {...data}
             isEditMode={isEditMode}
+            onDragStart={(rankValue) => {
+              if (!isEditMode) return;
+              setDraggingRank(rankValue);
+            }}
+            onDragOver={(rankValue) => {
+              if (!isEditMode) return;
+              setDragOverRank(rankValue);
+            }}
+            onDrop={(rankValue) => {
+              if (!isEditMode || draggingRank === null) return;
+              moveRank(draggingRank, rankValue);
+              setDraggingRank(null);
+              setDragOverRank(null);
+            }}
+            onDragEnd={() => {
+              setDraggingRank(null);
+              setDragOverRank(null);
+            }}
+            isDragging={draggingRank === data.rankValue}
+            isDragOver={dragOverRank === data.rankValue}
             onClick={
               isEditMode
                 ? () => {
@@ -84,7 +119,7 @@ const MyRanking = () => {
       </div>
 
       <div className={styles.editIcon} onClick={() => setIsEditMode(true)}>
-        <Pencil size={25} color='#7D7AFF' fill='white' />
+        <Pencil size={24} color='#111827' fill='none' />
       </div>
 
       {isEditMode && (
@@ -93,6 +128,8 @@ const MyRanking = () => {
             className={styles.doneBtn}
             onClick={() => {
               setIsEditMode(false);
+              setDraggingRank(null);
+              setDragOverRank(null);
               if (hasChanged(rankData, originalRankData)) {
                 editTop10Data(rankData);
                 setOriginalRankData(rankData);
