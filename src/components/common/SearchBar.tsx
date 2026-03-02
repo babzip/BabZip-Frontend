@@ -202,7 +202,6 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
             />
             <div className={styles.modal}>
               <VisitedEatery
-                shareUrl={selectedData.place_url}
                 onModifyClicked={() => {
                   setIsModalOn(false);
                   setIsModifyModalOn(true);

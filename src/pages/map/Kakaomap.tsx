@@ -277,7 +277,6 @@ function Kakaomap() {
             />
             <div className={styles.modal}>
               <VisitedEatery
-                shareUrl={selectedMarker.placeUrl ?? window.location.href}
                 restaurentName={selectedMarker.placeName ?? '가게 정보'}
                 location={selectedMarker.address ?? ''}
                 visitedDate={
