@@ -310,25 +310,27 @@ function Kakaomap() {
                 setSelectedMarker(null);
               }}
             />
-            <ReviewPage
-              initialContent={selectedMarker.content}
-              initialRating={selectedMarker.rating}
-              closeModal={() => {
-                setIsModifyModalOn(false);
-                setSelectedMarker(null);
-              }}
-              onReviewSubmitted={() => {
-                loadRatedMarkers();
-              }}
-              address={selectedMarker.address ?? ''}
-              kakaoPlaceId={selectedMarker.id}
-              name={selectedMarker.placeName ?? ''}
-              visitedDate={
-                selectedMarker.createdAt
-                  ? new Date(selectedMarker.createdAt)
-                  : new Date()
-              }
-            />
+            <div className={styles.modifyModalContent}>
+              <ReviewPage
+                initialContent={selectedMarker.content}
+                initialRating={selectedMarker.rating}
+                closeModal={() => {
+                  setIsModifyModalOn(false);
+                  setSelectedMarker(null);
+                }}
+                onReviewSubmitted={() => {
+                  loadRatedMarkers();
+                }}
+                address={selectedMarker.address ?? ''}
+                kakaoPlaceId={selectedMarker.id}
+                name={selectedMarker.placeName ?? ''}
+                visitedDate={
+                  selectedMarker.createdAt
+                    ? new Date(selectedMarker.createdAt)
+                    : new Date()
+                }
+              />
+            </div>
           </>
         ) : (
           ''

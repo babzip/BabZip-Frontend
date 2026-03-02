@@ -230,19 +230,31 @@ const SearchBar = ({ value, placeholder, onChange }: Props) => {
       </div>
       <div className={styles.modifyModal}>
         {isModifyModalOn ? (
-          <ReviewPage
-            initialContent={postInfo?.content}
-            initialRating={postInfo?.rating}
-            closeModal={() => {
-              setIsModifyModalOn(false);
-              setMarker(null);
-              setCenter(lat, lng);
-            }}
-            address={postInfo?.address ?? ''}
-            kakaoPlaceId={selectedData.id}
-            name={postInfo?.restaurantName ?? ''}
-            visitedDate={new Date(postInfo?.createdAt ?? new Date())}
-          />
+          <>
+            <div
+              className={styles.modalOverlay}
+              onClick={() => {
+                setIsModifyModalOn(false);
+                setMarker(null);
+                setCenter(lat, lng);
+              }}
+            />
+            <div className={styles.modifyModalContent}>
+              <ReviewPage
+                initialContent={postInfo?.content}
+                initialRating={postInfo?.rating}
+                closeModal={() => {
+                  setIsModifyModalOn(false);
+                  setMarker(null);
+                  setCenter(lat, lng);
+                }}
+                address={postInfo?.address ?? ''}
+                kakaoPlaceId={selectedData.id}
+                name={postInfo?.restaurantName ?? ''}
+                visitedDate={new Date(postInfo?.createdAt ?? new Date())}
+              />
+            </div>
+          </>
         ) : (
           ''
         )}

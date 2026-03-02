@@ -79,8 +79,9 @@
   border-radius: 8px;
   background-color: #7d7aff;
   color: white;
-  position: fixed;
-  bottom: 1rem;
+  position: static;
+  margin-top: 0.25rem;
+  margin-bottom: 1rem;
 }
 
 .fullView {
@@ -88,7 +89,7 @@
 }
 
 .unFullView {
-  height: 50%;
+  height: 62%;
 }
 
 .fullViewBtn {
@@ -96,8 +97,7 @@
 }
 
 .unFullViewBtn {
-  position: fixed;
-  bottom: 1rem;
+  position: static;
 }
 
 .rating {

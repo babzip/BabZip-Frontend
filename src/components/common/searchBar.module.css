@@ -113,6 +113,14 @@
 .modifyModal {
   z-index: 1005;
   width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+.modifyModalContent {
+  position: relative;
+  z-index: 11;
 }
 
 .subAddress {
