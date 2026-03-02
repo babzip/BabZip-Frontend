@@ -45,9 +45,6 @@ const VisitedEatery = ({
   return (
     <div className={styles.container}>
       <div className={styles.sheetHandle} />
-      <div className={styles.shareIcon} onClick={() => handleShare()}>
-        <Share size={18} color='#6b7280' />
-      </div>
       <div className={styles.topBar}>
         <div className={styles.titleWrap}>
           <div className={styles.title}>{restaurentName}</div>
@@ -60,14 +57,19 @@ const VisitedEatery = ({
               : '아직 기록이 없는 가게입니다.'}
           </div>
         </div>
-        {visited ? (
-          <div className={styles.rating}>
-            <Star size={16} fill='#facc15' color='#facc15' />
-            <span>{rating.toFixed(1)}</span>
+        <div className={styles.rightMeta}>
+          {visited ? (
+            <div className={styles.rating}>
+              <Star size={16} fill='#facc15' color='#facc15' />
+              <span>{rating.toFixed(1)}</span>
+            </div>
+          ) : (
+            ''
+          )}
+          <div className={styles.shareIcon} onClick={() => handleShare()}>
+            <Share size={18} color='#6b7280' />
           </div>
-        ) : (
-          ''
-        )}
+        </div>
       </div>
 
       {!visited ? (
