@@ -5,7 +5,6 @@ import styles from './visitedEatery.module.css';
 import { useState } from 'react';
 
 type Props = {
-  shareUrl: string;
   restaurentName: string;
   location: string;
   visitedDate: Date;
@@ -18,7 +17,6 @@ type Props = {
 };
 
 const VisitedEatery = ({
-  shareUrl,
   restaurentName,
   location,
   visitedDate,
@@ -30,15 +28,35 @@ const VisitedEatery = ({
   onDeleteClicked,
 }: Props) => {
   const [isCheckModalOn, setIsCheckModalOn] = useState<boolean>(false);
-  const handleShare = () => {
+
+  const getKakaoMapUrl = () => {
+    const query = restaurentName.trim();
+    return `https://map.kakao.com/link/search/${encodeURIComponent(query)}`;
+  };
+
+  const handleOpenKakaoMap = () => {
+    window.open(getKakaoMapUrl(), '_blank', 'noopener,noreferrer');
+  };
+
+  const handleShare = async () => {
+    const mapUrl = getKakaoMapUrl();
+
     if (navigator.share) {
-      navigator.share({
-        title: restaurentName,
-        text: `BabZip에서 ${restaurentName}을 공유합니다!`,
-        url: shareUrl,
-      });
-    } else {
-      alert('공유하기를 지원하지 않는 환경입니다.');
+      try {
+        await navigator.share({
+          url: mapUrl,
+        });
+        return;
+      } catch {
+        // 공유 취소/실패 시 클립보드 복사로 폴백
+      }
+    }
+
+    try {
+      await navigator.clipboard.writeText(mapUrl);
+      alert('카카오맵 링크를 복사했습니다.');
+    } catch {
+      alert('링크 복사에 실패했습니다.');
     }
   };
 
@@ -58,17 +76,23 @@ const VisitedEatery = ({
           </div>
         </div>
         <div className={styles.rightMeta}>
-          {visited ? (
-            <div className={styles.rating}>
-              <Star size={16} fill='#facc15' color='#facc15' />
-              <span>{rating.toFixed(1)}</span>
+          <div className={styles.mainMeta}>
+            {visited ? (
+              <div className={styles.rating}>
+                <Star size={16} fill='#facc15' color='#facc15' />
+                <span>{rating.toFixed(1)}</span>
+              </div>
+            ) : (
+              ''
+            )}
+            <div className={styles.shareIcon} onClick={() => handleShare()}>
+              <Share size={18} color='#6b7280' />
             </div>
-          ) : (
-            ''
-          )}
-          <div className={styles.shareIcon} onClick={() => handleShare()}>
-            <Share size={18} color='#6b7280' />
           </div>
+
+          <button className={styles.mapBtn} onClick={handleOpenKakaoMap}>
+            카카오맵으로 열기
+          </button>
         </div>
       </div>
 
